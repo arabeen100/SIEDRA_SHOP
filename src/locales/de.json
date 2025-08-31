@@ -13,6 +13,7 @@
   "navbar.logout": "Abmelden",
   "navbar.register": "Registrieren",
   "navbar.login": "Anmelden",
+  "navbar.language":"العربية",
 
   "footer.orders": "Meine Bestellungen",
   "footer.returns": "Rückgabe",
@@ -43,6 +44,8 @@
   "form.order_number": "Bestellnummer",
   "form.return_reason": "Rückgabe",
   "form.note": "Notiz",
+  "forms.message_sent_success": "Nachricht erfolgreich gesendet!",
+
 
   "home.shop_and_get_offers": "Shoppen und alle Angebote sichern",
   "home.eu_shipping": "Versand in alle EU-Länder",

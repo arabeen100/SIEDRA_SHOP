@@ -13,6 +13,7 @@
   "navbar.logout": "تسجيل الخروج",
   "navbar.register": "تسجيل",
   "navbar.login": "تسجيل الدخول",
+  "navbar.language":"Deutsch",
 
   "footer.orders": "طلباتي",
   "footer.returns": "الاسترجاع",
@@ -43,6 +44,8 @@
   "form.order_number": "رقم الطلب",
   "form.return_reason": "الاسترجاع",
   "form.note": "ملاحظة",
+  "forms.message_sent_success": "تم إرسال الرسالة بنجاح!",
+
 
   "home.shop_and_get_offers": "تسوق واحصل على كافة العروض",
   "home.eu_shipping": "شحن لكافة دول الاتحاد الأوروبي",
