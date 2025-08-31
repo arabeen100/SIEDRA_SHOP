@@ -1,4 +1,4 @@
-import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn,LogOut} from "lucide-react";
+import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useState,useEffect,useRef } from "react";
