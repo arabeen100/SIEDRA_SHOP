@@ -31,7 +31,8 @@
   "form.password_uppercase": "حرف كبير واحد",
   "form.password_lowercase": "حرف صغير واحد",
   "form.password_number": "رقم واحد",
-  "form.password_special": "حرف خاص واحد",
+"forms.password_special_char": "حرف خاص واحد (على سبيل المثال ، !, @, #, $, إلخ.)",
+
   "form.username_taken": "هذا الاسم مستخدم بالفعل",
   "form.email_taken": "هذا البريد الإلكتروني مستخدم بالفعل",
   "form.forgot_password": "نسيت كلمة المرور؟",
@@ -45,6 +46,17 @@
   "form.return_reason": "الاسترجاع",
   "form.note": "ملاحظة",
   "forms.message_sent_success": "تم إرسال الرسالة بنجاح!",
+"forms.username_min_length": "اسم المستخدم لا يمكن أن يقل عن 4 أحرف."
+,
+"forms.verify_email": "تحقق من البريد الإلكتروني",
+"forms.register": "التسجيل"
+,
+"forms.or_register": "أو التسجيل"
+,
+"forms.invalid_data": "البيانات المدخلة غير صحيحة"
+,
+  "form.email_not_registered": "هذا البريد الإلكتروني غير مسجل.",
+   "form.invalid_code_or_email": "الرمز أو البريد الإلكتروني غير صالح. يرجى المحاولة مرة أخرى.",
 
 
   "home.shop_and_get_offers": "تسوق واحصل على كافة العروض",

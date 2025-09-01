@@ -2,7 +2,9 @@ import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn} from "
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useState,useEffect,useRef } from "react";
+import { useLocation } from "react-router-dom";
 const Navbar = () => {
+  const { pathname } = useLocation();
    const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [openAccount, setOpenAccount] = useState<boolean>(false);
     const [openAccount2, setOpenAccount2] = useState<boolean>(false);
@@ -44,46 +46,47 @@ const Navbar = () => {
   return (
       <nav className="fixed top-0 w-full bg-white z-50 flex justify-evenly items-center p-3 vs:justify-center vs:gap-7 lg:gap-3  ">
         <div className="relative z-20 text-left  lg:hidden" ref={menuRef} >
-          <button onClick={toggleMenu}  className="hover:bg-[#02241033] w-11 h-11  rounded-lg grid place-content-center cursor-pointer">
+          <button onClick={toggleMenu}  className="hover:bg-[#02241033] w-11 h-11  rounded-lg grid place-content-center cursor-pointer active:scale-95 transition-transform">
               <Menu color="gray" size={20}/>
           </button>
         {openMenu && (
         <div className={`origin-top-right absolute  ${i18n.language==="ar"?"right-0":"left-0"} top-16 mt-2 vs:w-[280px] sm:w-[374px] md:w-[264px] rounded-lg shadow-xl bg-white  `}>
           <div className="py-1 flex flex-col gap-3.5">
-            <Link to={`/`} className="flex  px-4 py-2  text-sm text-gray-700  hover:bg-purple-200 rounded-md w-full text-left gap-1 group">
-              <Home className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-              <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.home")}</p>
+            <Link to={`/`} onClick={()=>setOpenMenu(false)} className="flex  px-4 py-2  text-sm text-gray-700  hover:bg-purple-200 rounded-md w-full text-left gap-1 group active:bg-purple-700 active:text-white">
+              <Home className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500 group-active:text-white" size={18}/>
+              <p className="group-focus:text-purple-500 text-gray-500 group-active:text-white group-hover:text-purple-500">{t("navbar.home")}</p>
         
             </Link>
-            <Link to={`/products`} className="flex px-4 py-2 text-sm text-gray-700 hover:bg-purple-200 w-full rounded-md text-left gap-1 group">
-               <Store className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-               <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.shop")}</p>
+            <Link onClick={()=>setOpenMenu(false)} to={`/products`} className="flex active:bg-purple-700 px-4 py-2 text-sm text-gray-700 hover:bg-purple-200 w-full rounded-md text-left gap-1 group">
+               <Store className="group-active:text-white group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
+               <p className="group-active:text-white group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.shop")}</p>
               
             </Link>
             <div className="relative  text-left  lg:hidden" >
-            <button className="flex px-4 py-2 text-sm text-gray-700 hover:bg-purple-200 w-full rounded-md  text-left gap-1 group cursor-pointer" onClick={toggleAccount}>
-                <User className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-                <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.account")}</p>
+            <button  className="flex px-4 py-2 text-sm text-gray-700 hover:bg-purple-200 w-full rounded-md  text-left gap-1 group cursor-pointer active:bg-purple-700" onClick={()=>{toggleAccount();
+            }}>
+                <User className="group-active:text-white group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
+                <p className="group-active:text-white group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.account")}</p>
         
              </button>
              {openAccount && (
                <div className={`mt-2 vs:w-[280px] sm:w-[374px] md:w-[264px] rounded-lg  bg-white  `}>
               <div className="py-1 flex flex-col gap-1">
-                <Link className={`flex place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/login`} >
-                  <LogIn className="group-hover:text-purple-500 text-gray-700" size={15}/>
-                  <p className="group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
+                <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/login`} >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
                 </Link>
-                <Link className={`flex place-items-center gap-1.5 group ${i18n.language==="ar"?"pr-5":"pl-5"}  hover:bg-purple-200 py-1.5 rounded-md`} to={`/signup`} >
-                  <LogIn className=" group-hover:text-purple-500 text-gray-700" size={15}/>
-                  <p className="group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
+                <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group ${i18n.language==="ar"?"pr-5":"pl-5"}  hover:bg-purple-200 py-1.5 rounded-md`} to={`/signup`} >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
                 </Link>
               </div>
               </div>
              )}  
              </div>
-             <Link to={`/wishlist`} className={`flex px-4 py-2 text-sm text-gray-700 hover:bg-purple-200  rounded-md  w-full text-left gap-1 group`}>
-                 <Heart className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-                <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.favorites")}</p>
+             <Link onClick={()=>setOpenMenu(false)} to={`/wishlist`} className={`flex  active:bg-purple-700 px-4 py-2 text-sm text-gray-700 hover:bg-purple-200  rounded-md  w-full text-left gap-1 group`}>
+                 <Heart className="group-active:text-white group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
+                <p className="group-active:text-white group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.favorites")}</p>
         
              </Link>
           </div>
@@ -91,44 +94,44 @@ const Navbar = () => {
       )}
         </div>
         <Link to={`/`} className="flex flex-col gap-1 group max-lg:hidden items-center lg:order-4">
-          <Home className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-          <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.home")}</p>
+          <Home className={`group-focus:text-purple-500 group-hover:text-purple-500 ${pathname==="/"?"text-purple-500 ": "text-gray-500"} `}size={18}/>
+          <p className={`${pathname==="/"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.home")}</p>
         
         </Link>
           <Link to={`/products`} className="flex flex-col gap-1 group max-lg:hidden items-center lg:order-5">
-          <Store className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-          <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.shop")}</p>
+          <Store className={`${pathname==="/products"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}size={18}/>
+          <p className={`${pathname==="/products"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.shop")}</p>
         
         </Link>
         <div ref={accountRef} className="relative z-20 text-left max-lg:hidden  lg:order-6" >
-            <button className="flex flex-col gap-1 group max-lg:hidden items-center cursor-pointer" onClick={toggleAccount2}>
-                <User className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-                <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.account")}</p>
+            <button className=" active:scale-95 transition-transform flex flex-col gap-1 group max-lg:hidden items-center cursor-pointer" onClick={toggleAccount2}>
+                <User className="group-active:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
+                <p className="group-active:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.account")}</p>
         
              </button>
              {openAccount2 && (
                <div className={`origin-top-right absolute  ${i18n.language==="ar"?"right-0":"left-0"} top-12  mt-2 w-[192px] rounded-lg  bg-white  `}>
               <div className="py-1 flex flex-col gap-1">
-                <Link className={`flex place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 `} to={`/login`} >
-                  <LogIn className="group-hover:text-purple-500 text-gray-700" size={15}/>
-                  <p className="group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
+                <Link onClick={()=>setOpenAccount2(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 px-1.5 `} to={`/login`} >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
                 </Link>
-                <Link className={`flex place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`} to={`/signup`} >
-                  <LogIn className=" group-hover:text-purple-500 text-gray-700" size={15}/>
-                  <p className="group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
+                <Link  onClick={()=>setOpenAccount2(false)} className={`flex px-1.5 active:bg-purple-700 place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`} to={`/signup`} >
+                  <LogIn className=" group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
                 </Link>
               </div>
               </div>
              )}  
           </div>
         <Link to={`/wishlist`} className="flex flex-col gap-1 group max-lg:hidden items-center lg:order-7">
-          <Heart className="group-focus:text-purple-500 group-hover:text-purple-500 text-gray-500" size={18}/>
-          <p className="group-focus:text-purple-500 text-gray-500 group-hover:text-purple-500">{t("navbar.favorites")}</p>
+          <Heart className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`} size={18}/>
+          <p className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.favorites")}</p>
         
         </Link>
         <Link className="lg:flex lg:flex-col lg:items-center lg:gap-1  lg:order-8 group" to={"/cart"}>
-          <ShoppingBag className="group-hover:text-purple-500 text-gray-500 group-focus:text-purple-500"  size={18}/>
-             <p className="text-gray-500 max-lg:hidden group-hover:text-purple-500 group-focus:text-purple-500">{t("navbar.cart")}</p>
+          <ShoppingBag className={`${pathname==="/cart"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}size={18}/>
+             <p className={`${pathname==="/cart"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500 max-lg:hidden `}>{t("navbar.cart")}</p>
         </Link>
         <button className="lg:order-8 flex order-last flex-col gap-1  items-center gap-.5 cursor-pointer text-gray-500 hover:text-purple-500 group" onClick={()=>{
             i18n.changeLanguage(i18n.language === 'ar' ? 'de' : 'ar'); }}>
@@ -138,7 +141,7 @@ const Navbar = () => {
              </p>
               
          </button>
-        <div className=" max-lg:hidden order-3 w-40 xl:w-115 bg-white"></div>
+        <div className=" max-lg:hidden order-3 w-90 xl:w-115 bg-white"></div>
 
  
          <Link className="lg:order-1" to={"/"}>

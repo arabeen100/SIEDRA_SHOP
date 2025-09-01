@@ -34,8 +34,8 @@ function App() {
         <Route path='login' element={<Login/>}/>
         <Route path='signup' element={<Signup/>}/>
         <Route path='forgot-pass' element={<Forgotpass/>}/>
-        <Route path='reset-pass/:token' element={<Resetpass/>}/>
-        <Route path='verify-email/:token' element={<Verifyemail/>}/>
+        <Route path='reset-pass' element={<Resetpass/>}/>
+        <Route path='verify-email' element={<Verifyemail/>}/>
         <Route path='category/:categoryName' element={<Category/>}/>
         <Route path='product/:productName' element={<Product/>}/>
         <Route path='products' element={<Products/>}/>

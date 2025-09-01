@@ -1,9 +1,9 @@
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import { Outlet } from "react-router-dom"
-const Layout = () => {
+const Layout  = () => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-gray-300">
         <Navbar/>
         <Outlet/>
         <Footer/>

@@ -31,7 +31,7 @@
   "form.password_uppercase": "Mindestens ein Großbuchstabe",
   "form.password_lowercase": "Mindestens ein Kleinbuchstabe",
   "form.password_number": "Mindestens eine Zahl",
-  "form.password_special": "Mindestens ein Sonderzeichen",
+ "forms.password_special_char": "حرف خاص واحد (على سبيل المثال ، !, @, #, $, إلخ.)",
   "form.username_taken": "Dieser Benutzername wird bereits verwendet",
   "form.email_taken": "Diese E-Mail-Adresse wird bereits verwendet",
   "form.forgot_password": "Passwort vergessen?",
@@ -45,7 +45,18 @@
   "form.return_reason": "Rückgabe",
   "form.note": "Notiz",
   "forms.message_sent_success": "Nachricht erfolgreich gesendet!",
+  "forms.username_min_length": "Der Benutzername darf nicht weniger als 4 Zeichen enthalten."
+,
+"forms.verify_email": "E-Mail bestätigen",
+"forms.register": "Registrieren"
+,
+"forms.or_register": "Oder registrieren"
+,
+"forms.invalid_data": "Die eingegebenen Daten sind ungültig"
+,
 
+"form.email_not_registered": "Diese E-Mail ist nicht registriert.",
+ "form.invalid_code_or_email": "Der Code oder die E-Mail-Adresse ist ungültig. Bitte versuchen Sie es erneut.",
 
   "home.shop_and_get_offers": "Shoppen und alle Angebote sichern",
   "home.eu_shipping": "Versand in alle EU-Länder",
