@@ -4,7 +4,10 @@ import { Eye,EyeOff } from "lucide-react";
 import { SpinnerCircular } from "spinners-react";
 import { useLogInMutation } from "../../features/api/apiSlice";
 import{ Link,useNavigate} from "react-router-dom";
+import { useAppDispatch } from "../../hooks/reduxTyped";
+import { setToken,setItem } from "../../features/login/token";
 const Login = () => {
+  const dispatch=useAppDispatch();
   const navigate=useNavigate();
   const[login,{isLoading,error}]=useLogInMutation();
   const { t ,i18n} = useTranslation();
@@ -21,6 +24,8 @@ const Login = () => {
         const response=await login(formData).unwrap();
         if(response.status){
           navigate("/");
+          dispatch(setToken(response.data.token));
+          dispatch(setItem());
         }
       } catch (error) {
         console.log(error);

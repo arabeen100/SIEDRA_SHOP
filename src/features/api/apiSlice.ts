@@ -273,7 +273,7 @@ interface OrderData {
 }
 interface GetWishListParams {
   do: 'view' | 'add' | 'remove';
-    product?: Product;
+    product?: string;
 }
 // Image of a product
 interface ProductImage {
@@ -654,23 +654,25 @@ export const apiSlice = createApi({
                    }) 
                 }
             }),
-              getWishList:builder.query<WishlistResponse|WishlistActionResponse,GetWishListParams>({
+              getWishList:builder.query<ApiResponse<WishlistResponse>&ApiResponse<WishlistActionResponse>,GetWishListParams>({
                 query:({do:action,product})=>{
                     const token=localStorage.getItem("userToken");
                     switch (action) {
                         case'view':
                             return {
-                                url:'/profile/wishList',
+                                url:'/profile/wishlist',
                                 method:'GET',
+                                params:{do:action},
                                 headers:{
                     "Authorization":`Bearer ${token}`
-                      }
+                      },
+                    
                     }
                         case 'add':
                             return {
-                                url:'/profile/wishList',
+                                url:'/profile/wishlist',
                                 method:'GET',
-                                params:{product},
+                                params:{do:action,product},
                                 headers:{
                     "Authorization":`Bearer ${token}`
                     }
@@ -678,23 +680,26 @@ export const apiSlice = createApi({
                 } 
                   case 'remove':
                     return {
-                        url:`/profile/wishList`,
+                        url:`/profile/wishlist`,
                         method:'GET',
-                        params:{product},
+                        params:{do:action,product},
                              headers:{
                     "Authorization":`Bearer ${token}`
                     }  
               }          
               default:
                 return {
-                    url:'/profile/wishList',
+                    url:'/profile/wislList',
                     method:'GET',
+                    params:{do:action},
                          headers:{
                     "Authorization":`Bearer ${token}`
                   }  
                 }
              } 
-            }       
+            },
+            
+                  
                     
        }),
             
@@ -710,6 +715,7 @@ export const apiSlice = createApi({
 })
 
 export const {
+   useLazyGetWishListQuery,
     useRegisterMutation,
     useVerifyEmailMutation,
     useLogInMutation,

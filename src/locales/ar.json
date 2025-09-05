@@ -108,5 +108,9 @@
   "checkout.items": "عناصر",
   "checkout.address": "العنوان",
   "checkout.payment_by": "الدفع بواسطة",
-  "checkout.pay_now": "الدفع"
+  "checkout.pay_now": "الدفع",
+  "added_to_favorites": "تمت الإضافة إلى المفضلة!",
+    "removed_from_favorites": "تمت إزالته من المفضلة!",
+     "please_login_first": "يرجى تسجيل الدخول أولا!",
+      "logout_success": "تم تسجيل الخروج بنجاح!" 
 }

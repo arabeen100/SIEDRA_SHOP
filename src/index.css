@@ -7,3 +7,7 @@
     --breakpoint-xl:1500px;
 }
  
+
+.swiper-wrapper {
+  margin: 0 !important;
+}

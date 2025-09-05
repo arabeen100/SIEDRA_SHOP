@@ -107,5 +107,9 @@
   "checkout.items": "Artikel",
   "checkout.address": "Adresse",
   "checkout.payment_by": "Bezahlen mit",
-  "checkout.pay_now": "Bezahlen"
+  "checkout.pay_now": "Bezahlen",
+    "added_to_favorites": "Zur Favoritenliste hinzugefügt!",
+     "removed_from_favorites": "Aus der Favoritenliste entfernt!",
+    "please_login_first": "Bitte melden Sie sich zuerst an!",
+       "logout_success": "Erfolgreich abgemeldet!"
 }

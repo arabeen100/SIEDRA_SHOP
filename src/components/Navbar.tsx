@@ -1,9 +1,18 @@
-import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn} from "lucide-react";
+import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn,ShoppingCart, Undo2} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useState,useEffect,useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useAppSelector,useAppDispatch } from "../hooks/reduxTyped";
+import { setItem, setToken } from "../features/login/token";
+import { useLogOutMutation } from "../features/api/apiSlice";
+import { toast } from "react-toastify";
+import { useGetWishListQuery } from "../features/api/apiSlice";
 const Navbar = () => {
+  const {data:wishlist}=useGetWishListQuery({do:"view"});
+  const [logout]=useLogOutMutation();
+  const dispatch=useAppDispatch();
+  const{token}=useAppSelector((state)=>state.token);
   const { pathname } = useLocation();
    const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [openAccount, setOpenAccount] = useState<boolean>(false);
@@ -43,6 +52,19 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside2);
     };
   }, []);
+  const handleLogout=async()=>{
+    try {
+      const response=await logout().unwrap();
+      if(response.status){
+        dispatch(setToken(""));
+        dispatch(setItem());
+        toast.info(t("logout_success"))
+      }
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   return (
       <nav className="fixed top-0 w-full bg-white z-50 flex justify-evenly items-center p-3 vs:justify-center vs:gap-7 lg:gap-3  ">
         <div className="relative z-20 text-left  lg:hidden" ref={menuRef} >
@@ -71,7 +93,7 @@ const Navbar = () => {
              </button>
              {openAccount && (
                <div className={`mt-2 vs:w-[280px] sm:w-[374px] md:w-[264px] rounded-lg  bg-white  `}>
-              <div className="py-1 flex flex-col gap-1">
+              {!token&&<div className="py-1 flex flex-col gap-1">
                 <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/login`} >
                   <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
                   <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
@@ -80,7 +102,32 @@ const Navbar = () => {
                   <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
                   <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
                 </Link>
+              </div>}
+              {token&&
+               <div className="py-1 flex flex-col gap-1">
+                <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/profile`} >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.profile")}</p>
+                </Link>
+                <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/myorders`} >
+                  <ShoppingCart className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.orders")}</p>
+          
+                </Link>
+                <Link onClick={()=>setOpenMenu(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 ${i18n.language==="ar"?"pr-10":"pl-10"}`} to={`/refund`} >
+                  <Undo2 className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.returns")}</p>
+                </Link>
+                <button onClick={()=>{setOpenMenu(false);
+                handleLogout();
+
+                }} className={`flex active:bg-purple-700 place-items-center gap-1.5 group ${i18n.language==="ar"?"pr-10":"pl-10"}  hover:bg-purple-200 py-1.5 rounded-md cursor-pointer`}  >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.logout")}</p>
+                </button>
+
               </div>
+              }
               </div>
              )}  
              </div>
@@ -111,7 +158,7 @@ const Navbar = () => {
              </button>
              {openAccount2 && (
                <div className={`origin-top-right absolute  ${i18n.language==="ar"?"right-0":"left-0"} top-12  mt-2 w-[192px] rounded-lg  bg-white  `}>
-              <div className="py-1 flex flex-col gap-1">
+              {!token&&<div className="py-1 flex flex-col gap-1">
                 <Link onClick={()=>setOpenAccount2(false)} className={`flex active:bg-purple-700 place-items-center gap-1.5 group w-full rounded-md hover:bg-purple-200 py-1.5 px-1.5 `} to={`/login`} >
                   <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
                   <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.login")}</p>
@@ -120,12 +167,49 @@ const Navbar = () => {
                   <LogIn className=" group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
                   <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.register")}</p>
                 </Link>
+              </div>}
+              {token&&
+               <div className="py-1 flex flex-col gap-1">
+                <Link onClick={()=>{setOpenMenu(false);
+                setOpenAccount2(false)
+
+                }} className={`flex px-1.5 active:bg-purple-700 place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`} to={`/profile`} >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.profile")}</p>
+                </Link>
+                <Link onClick={()=>{setOpenMenu(false);
+                setOpenAccount2(false)
+
+                }} className={`flex px-1.5 active:bg-purple-700 place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`} to={`/myorders`} >
+                  <ShoppingCart className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.orders")}</p>
+          
+                </Link>
+                <Link onClick={()=>{setOpenMenu(false);
+                setOpenAccount2(false)
+
+                }} className={`flex px-1.5 active:bg-purple-700 place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`} to={`/refund`} >
+                  <Undo2 className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.returns")}</p>
+                </Link>
+                <button onClick={()=>{setOpenMenu(false);
+                handleLogout();
+                setOpenAccount2(false);
+
+                }} className={`flex px-1.5 active:bg-purple-700 place-items-center gap-1.5 group   hover:bg-purple-200 py-1.5 rounded-md`}  >
+                  <LogIn className="group-active:text-white group-hover:text-purple-500 text-gray-700" size={15}/>
+                  <p className="group-active:text-white group-hover:text-purple-500 text-gray-600 text-sm">{t("navbar.logout")}</p>
+                </button>
+
               </div>
+              }
+              
               </div>
              )}  
           </div>
-        <Link to={`/wishlist`} className="flex flex-col gap-1 group max-lg:hidden items-center lg:order-7">
-          <Heart className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`} size={18}/>
+        <Link to={`/wishlist`} className="relative flex flex-col gap-1 group max-lg:hidden items-center lg:order-7">
+          <Heart className={ `  ${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`} size={18}/>
+          {wishlist?.data?.wishlist_items&&<p className=" grid place-content-center absolute bottom-9 right-2 w-4 h-4 text-xs rounded-full bg-purple-700 text-white">{wishlist?.data?.wishlist_items?.length}</p>}
           <p className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.favorites")}</p>
         
         </Link>
@@ -141,7 +225,7 @@ const Navbar = () => {
              </p>
               
          </button>
-        <div className=" max-lg:hidden order-3 w-90 xl:w-115 bg-white"></div>
+        <div className=" max-lg:hidden order-3 w-[33vw] bg-white"></div>
 
  
          <Link className="lg:order-1" to={"/"}>
