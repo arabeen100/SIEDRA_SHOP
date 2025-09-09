@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import {useLazyGetWishListQuery,useGetWishListQuery} from "../features/api/apiSlice";;
 import { toast } from "react-toastify";
 import { useAppSelector } from "../hooks/reduxTyped";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 const Productcard:React.FC<any> = ({product}) => {
+ const[isFavorite,setIsFavorite]=useState<boolean>(false);
     const [triggerWishlist] = useLazyGetWishListQuery();
     const{token}=useAppSelector((state)=>state.token);
     const{i18n,t}=useTranslation();
@@ -20,17 +21,23 @@ useEffect(()=>{
     if(wishlist){
         console.log(wishlist)
     }
-})
+},[wishlist])
   const isInWishlist = wishlist?.data?.wishlist_items?.some((wishlistItem) => wishlistItem.id === product.id);
 
+  useEffect(()=>{
+    if(isInWishlist){
+      setIsFavorite(isInWishlist);
+    }
+  },[isInWishlist])
  
 const handleToogle=async(productName:string)=>{
    if(token){
     if(isInWishlist){
         try {
-           const response= await triggerWishlist({do:"remove",product:productName});
+           const response= await triggerWishlist({do:"remove",product:productName}).unwrap();
            if(response.status){
             toast.error(t("removed_from_favorites"))
+          
             await triggerWishlist({do:"view"});
            }
         } catch (error) {
@@ -40,13 +47,15 @@ const handleToogle=async(productName:string)=>{
 
     }else{
         try {
-             const response=   await triggerWishlist({do:"add",product:productName});
+             const response=   await triggerWishlist({do:"add",product:productName}).unwrap();
            if(response.status){
             toast.info(t("added_to_favorites"));
+          
             await triggerWishlist({do:"view"});
            }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setIsFavorite((prev)=>!prev)
         }
     }
       
@@ -57,8 +66,10 @@ const handleToogle=async(productName:string)=>{
  return (
     <div className="bg-white rounded-2xl shadow-sm  p-3 flex flex-col items-center gap-3 relative w-full ">
       
-      <button onClick={()=>{handleToogle(product.name_du)}} className="cursor-pointer absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100">
-        <Heart size={18} className={isInWishlist ? "text-red-500 fill-red-500" : "text-gray-600"} />
+      <button onClick={()=>{handleToogle(product.name_du);
+         setIsFavorite(!isFavorite)
+      }} className="cursor-pointer absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100">
+        <Heart size={18} className={isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"} />
       </button>
 
       

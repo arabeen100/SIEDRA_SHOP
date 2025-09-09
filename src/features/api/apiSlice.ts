@@ -246,31 +246,49 @@ interface GetCartParams {
 }
 
 // Response type
- interface userData {
-    user: User1;
+ interface UserData {
+    user:User1;
     message?: string;
 }
 // Single order item
-interface OrderItem {
-  id: number;
-  name: string;
-  quantity: number;
-  price: number;
+interface ProductInfo {
+  name_ar: string;
+  name_du: string;
+  image: string;
 }
 
-// Single order
+interface OrderProduct {
+  ID: number;
+  ItemPrice: number;
+  Dimension: string | null;
+  Color: string | null;
+  Size: string | null;
+  Count: number;
+  SaleValue: number;
+  Total: number;
+  Product: ProductInfo;
+}
 interface Order {
-  id: number;
-  order_number: string;
-  total_price: number;
-  items: OrderItem[];
-  created_at: string;
+  ID: number;
+  Address: string;
+  Notes: string | null;
+  Price: number;
+  Shipping: number;
+  Customer_Name: string;
+  Customer_Phone: string;
+  Customer_Email: string;
+  Payment_Gate: string;
+  Payment_Status: string;
+  Status: string;
+  Order_ID: string;
+  CouponValue: number;
+  Adding_Date: string; // تقدر تخليها Date لو هتعمل parsing
+  Products: OrderProduct[];
+}
+interface OrdersData {
+  orders: Order[];
 }
 
-// Response type for orders endpoint
-interface OrderData {
-    orders: Order[];
-}
 interface GetWishListParams {
   do: 'view' | 'add' | 'remove';
     product?: string;
@@ -616,11 +634,11 @@ export const apiSlice = createApi({
                     
        }),
 
-           getProfile:builder.query<ApiResponse<userData>,void>({
+           getProfile:builder.query<ApiResponse<UserData>,void>({
             query:()=>{
                 const token=localStorage.getItem("userToken");
                 return({
-                url:'/profile',
+                url:'/profile/',
                 headers:{
                     "Authorization":`Bearer ${token}`
                 }
@@ -628,7 +646,7 @@ export const apiSlice = createApi({
 
             }
         }),
-           updateInfo:builder.mutation<ApiResponse<userData>,FormData>({
+           updateInfo:builder.mutation<ApiResponse<UserData>,FormData>({
             query:(userData)=>{
                 const token=localStorage.getItem("userToken");
                 return({
@@ -642,7 +660,7 @@ export const apiSlice = createApi({
                 })
             }
         }),
-            getUserOrders:builder.query<ApiResponse<OrderData>,void>({
+            getUserOrders:builder.query<ApiResponse<OrdersData>,void>({
                 query:()=>{
                    const token=localStorage.getItem("userToken");
                    return({

@@ -48,9 +48,8 @@ function App() {
         <Route path='update-profile' element={<Update/>}/>
         <Route path='myorders' element={<Myorders/>}/>
         <Route path='wishlist' element={<Wishlist/>}/>
-        <Route path='*' element={<Missing/>}/>
       </Route>
-
+       <Route path="*" element={<Missing />} />
     </Routes>
     <ToastContainer position={`${i18n.language==="ar"?"top-right":"top-left"}`} autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={i18n.language==="ar"?true:false} pauseOnFocusLoss draggable pauseOnHover theme='light'  />
     </>

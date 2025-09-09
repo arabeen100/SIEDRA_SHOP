@@ -3,7 +3,9 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { useContactMutation } from "../features/api/apiSlice";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../hooks/reduxTyped";
 const Footer = () => {
+  const{token}=useAppSelector((state)=>state.token)
   const { t ,i18n} = useTranslation();
   const[name,setName]=useState<string>("");
   const[email,setEmail]=useState<string>("");
@@ -38,7 +40,7 @@ const Footer = () => {
         <ul className="style-none flex flex-col gap-2  text-sm">
           <li ><Link className="hover:underline"  to={"/"}>{t("navbar.home")}</Link></li>
           <li ><Link className="hover:underline" to={"/products"}>{t("navbar.shop")}</Link></li>
-          <li ><Link className="hover:underline" to={"/login"}>{t("navbar.account")}</Link></li>
+          <li ><Link className="hover:underline" to={`${token?"/profile":"/login"}`}>{t("navbar.account")}</Link></li>
            <li ><Link className="hover:underline" to={"/myorders"}>{t("footer.orders")}</Link></li>
           <li ><Link className="hover:underline" to={"/refund"}>{t("footer.returns")}</Link></li>
         </ul>
@@ -51,15 +53,15 @@ const Footer = () => {
           <input type="text"
             value={name}
             onChange={(e)=>setName(e.target.value)}
-           placeholder={t("form.name")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2   mb-3 outline-0 focus:border-gray-500 focus:border-double focus:border-2"/>
+           placeholder={t("form.name")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2   mb-3 outline-0 focus:border-black focus:border-2"/>
           <input
             value={email}
             onChange={(e)=>setEmail(e.target.value)} 
-          type="email" placeholder={t("form.email")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2   mb-3 outline-0 focus:border-gray-500 focus:border-2"/>
+          type="email" placeholder={t("form.email")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2   mb-3 outline-0 focus:border-black focus:border-2"/>
           <textarea
             value={message}
             onChange={(e)=>setMessage(e.target.value)}
-          placeholder={t("form.message")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2    mb-3 outline-0 focus:border-gray-500 resize-none focus:border-2"/>
+          placeholder={t("form.message")} className="text-sm border border-gray-300 rounded-md w-2/3 p-2    mb-3 outline-0 focus:border-black resize-none focus:border-2"/>
           <button type="submit" className="bg-purple-600 text-white px-4 py-2 rounded-md w-2/3 hover:bg-purple-700  ">{t("form.contact_us")}</button>
         </form>
       </div>

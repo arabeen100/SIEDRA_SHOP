@@ -209,7 +209,7 @@ const Navbar = () => {
           </div>
         <Link to={`/wishlist`} className="relative flex flex-col gap-1 group max-lg:hidden items-center lg:order-7">
           <Heart className={ `  ${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`} size={18}/>
-          {wishlist?.data?.wishlist_items&&<p className=" grid place-content-center absolute bottom-9 right-2 w-4 h-4 text-xs rounded-full bg-purple-700 text-white">{wishlist?.data?.wishlist_items?.length}</p>}
+          {wishlist?.data?.wishlist_items&&<p className=" grid place-content-center absolute bottom-9 right-2.5 w-4 h-4 text-xs rounded-full bg-purple-700 text-white">{wishlist?.data?.wishlist_items?.length}</p>}
           <p className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.favorites")}</p>
         
         </Link>
