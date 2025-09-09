@@ -131,5 +131,7 @@
   "payment_status": "حالة الدفع",
   "price": "السعر",
   "shipping": "الشحن",
-  "order_status": "حالة الطلب"
+  "order_status": "حالة الطلب",
+    "invalid_order_number": "رقم الطلب هذا غير صالح.",
+     "return_request_success": "تم إرسال طلب الاسترجاع بنجاح ، انتظر رسالة بريد إلكتروني من فريق الدعم الخاص بنا."
 }

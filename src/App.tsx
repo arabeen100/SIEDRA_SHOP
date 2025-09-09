@@ -23,6 +23,7 @@ import Missing from './components/Missing'
 import { ToastContainer } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import 'react-toastify/dist/ReactToastify.css';
+import Search from './components/products/Search'
 function App() {
   const {i18n}=useTranslation();
   useDirection();
@@ -48,6 +49,7 @@ function App() {
         <Route path='update-profile' element={<Update/>}/>
         <Route path='myorders' element={<Myorders/>}/>
         <Route path='wishlist' element={<Wishlist/>}/>
+        <Route path='search/:name' element={<Search/>}/>
       </Route>
        <Route path="*" element={<Missing />} />
     </Routes>

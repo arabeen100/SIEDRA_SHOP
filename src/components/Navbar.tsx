@@ -1,14 +1,18 @@
-import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn,ShoppingCart, Undo2} from "lucide-react";
+import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn,ShoppingCart, Undo2,ArrowUpLeft} from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { useState,useEffect,useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from "../hooks/reduxTyped";
 import { setItem, setToken } from "../features/login/token";
 import { useLogOutMutation } from "../features/api/apiSlice";
 import { toast } from "react-toastify";
-import { useGetWishListQuery } from "../features/api/apiSlice";
+import { useGetWishListQuery ,useGetSearchProductsQuery} from "../features/api/apiSlice";
 const Navbar = () => {
+ 
+  const[search,setSearch]=useState<string>("");
+   const{data:searchProducts}=useGetSearchProductsQuery({name:search});
+  const navigate=useNavigate();
   const {data:wishlist}=useGetWishListQuery({do:"view"});
   const [logout]=useLogOutMutation();
   const dispatch=useAppDispatch();
@@ -58,7 +62,8 @@ const Navbar = () => {
       if(response.status){
         dispatch(setToken(""));
         dispatch(setItem());
-        toast.info(t("logout_success"))
+        toast.info(t("logout_success"));
+        navigate("/")
       }
     } catch (error) {
       console.log(error)
@@ -68,7 +73,7 @@ const Navbar = () => {
   return (
       <nav className="fixed top-0 w-full bg-white z-50 flex justify-evenly items-center p-3 vs:justify-center vs:gap-7 lg:gap-3  ">
         <div className="relative z-20 text-left  lg:hidden" ref={menuRef} >
-          <button onClick={toggleMenu}  className="hover:bg-[#02241033] w-11 h-11  rounded-lg grid place-content-center cursor-pointer active:scale-95 transition-transform">
+          <button onClick={toggleMenu}  className="hover:bg-[#02241033] w-11 h-11  rounded-lg grid place-content-center cursor-pointer active:scale-95 transition-transform shadow-2xl bg-gray-100">
               <Menu color="gray" size={20}/>
           </button>
         {openMenu && (
@@ -233,15 +238,39 @@ const Navbar = () => {
          </Link>
          <div className="  w-[95%] h-10  fixed  top-18  left-[2.5%] md:static md:w-60 lg:order-2">
           <input
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
            className=" border border-gray-300  w-full bg-white rounded-3xl p-2  outline-0 focus:border-gray-500"
           id='search'
           role='searchBox'
           type='text'
           placeholder={t("navbar.search")}
         />
-        <Search className={`relative bottom-7 ${i18n.language==="de"?"left-[91%]":"right-[91%]"}`} size={15} color="gray"/>
+        <Search className={` relative  bottom-7 ${i18n.language==="de"?"left-[91%]":"right-[91%]"}`} size={15} color="gray"/>
+       
         </div>
-   
+         {searchProducts?.data?.products?.length&&search&&<div className={`fixed z-10 top-29 lg:w-[45%] ${i18n.language==="ar"?"lg:right-[6%] min-[1440px]:right-[15%]":"min-[1440px]:left-[15%] lg:left-[6%]"}  min-[1440px]:w-[35%]  md:top-20 p-4 w-[95%] bg-white rounded-2xl flex flex-col gap-3`}>
+        {searchProducts?.data?.products?.map(product=>
+          <div className="flex justify-between" key={product.id}>
+            <div className="flex gap-4 items-center">
+               <img src={product.images[0]?.link} className="w-12 h-12"/>
+               <div className="flex flex-col">
+                <p className="text-sm text-gray-600">{i18n.language==="ar"?product.name_ar:product.name_du}</p>
+                <p className="text-xs text-gray-400">{i18n.language==="ar"?product.category?.name_ar:product.category?.name_du}</p>
+               </div>
+            </div>
+            <div className="flex gap-7 items-center">
+              <p className="text-sm font-bold hidden sm:block">€{product.price}</p>
+              <ArrowUpLeft size={19} className="text-purple-600 "/>
+
+
+            </div>
+          </div>
+        )}
+        <Link onClick={()=>setSearch("")} className="w-full px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200 grid place-content-center" to={`search/${search}`}>
+        Show All Products 
+        </Link>
+        </div>}
     
       
        

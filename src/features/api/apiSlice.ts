@@ -97,7 +97,7 @@ interface GetRepaymentParams {
   id: string
 }
 interface GetCategoryProductsParams {
-    categoryName: string
+    categoryName?: string
     color?: string
     size?: string
     sort?: string
@@ -368,6 +368,7 @@ interface CartActionResponse {
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://siedra-shop.eu/api' }),
+    tagTypes:["profile"],
     endpoints: (builder) => ({
              register:builder.mutation<ApiResponse<MostEndpointsData>,FormData>({
             query:(newUser)=>({
@@ -513,7 +514,7 @@ export const apiSlice = createApi({
         }), 
             getProducts:builder.query<ProductsResponse,GetCategoryProductsParams>({
                 query:({color,size,sort,limit,offset,min_price,max_price})=>({
-                    url:'/products',
+                    url:'/products/',
                     params:{
                         ...(color && {color}),
                         ...(size && {size}),
@@ -644,7 +645,8 @@ export const apiSlice = createApi({
                 }
              })
 
-            }
+            },
+            providesTags: ["profile"]
         }),
            updateInfo:builder.mutation<ApiResponse<UserData>,FormData>({
             query:(userData)=>{
@@ -656,9 +658,11 @@ export const apiSlice = createApi({
                     headers:{
                     "Authorization":`Bearer ${token}`
                 }
+                
 
                 })
-            }
+            },
+            invalidatesTags:["profile"] 
         }),
             getUserOrders:builder.query<ApiResponse<OrdersData>,void>({
                 query:()=>{
@@ -670,7 +674,8 @@ export const apiSlice = createApi({
                     }
                     
                    }) 
-                }
+                },
+                providesTags:["profile"]
             }),
               getWishList:builder.query<ApiResponse<WishlistResponse>&ApiResponse<WishlistActionResponse>,GetWishListParams>({
                 query:({do:action,product})=>{

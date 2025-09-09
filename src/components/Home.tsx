@@ -145,11 +145,11 @@ const slides =
         </div>
       </div>
       <div className="mt-10 md:w-[768px] lg:w-[976px] xl:w-[1440px] w-[95%] mx-auto max-h-[300px] ">
-        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/8584_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9%20%D8%BA%D9%84%D8%A7%D9%81.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " />
+        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/8584_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9%20%D8%BA%D9%84%D8%A7%D9%81.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " loading="lazy"/>
         <p className="text-lg font-bold text-gray-700 mt-5">{t("home.discounted_products")}</p>
       </div>
       <div className="mt-20 md:w-[768px] lg:w-[976px] xl:w-[1440px] w-[95%] mx-auto max-h-[300px] ">
-        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/196_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " />
+        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/196_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " loading="lazy" />
         <p className="text-lg font-bold text-gray-700 mt-5">{t("home.new_products")}</p>
       </div>
        <div className="relative w-[95%] mx-auto  md:w-[768px] lg:w-[976px]  xl:w-[1440px]  mt-20">
@@ -188,7 +188,7 @@ const slides =
         </button>
        </div>
        <div className="mt-10 md:w-[768px] lg:w-[976px] xl:w-[1440px] w-[95%] mx-auto max-h-[300px] ">
-        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/1288_%D8%B1%D8%AC%D8%A7%D9%84%D9%8A.webp" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " />
+        <img src="https://siedra-shop.eu/public/uploads/images/categories-images/1288_%D8%B1%D8%AC%D8%A7%D9%84%D9%8A.webp" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " loading="lazy" />
         <p className="text-lg font-bold text-gray-700 mt-5">{t("home.most_visited_products")}</p>
        </div>
        <div className="w-[95%] mx-auto  md:w-[768px] lg:w-[976px]  xl:w-[1440px]  mt-20 flex flex-wrap gap-3">

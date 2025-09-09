@@ -130,5 +130,7 @@
   "payment_status": "Zahlungsstatus",
   "price": "Preis",
   "shipping": "Versand",
-  "order_status": "Bestellstatus"
+  "order_status": "Bestellstatus",
+   "invalid_order_number": "Diese Bestellnummer ist ungültig.",
+   "return_request_success": "Die Rückgabeanfrage wurde erfolgreich gesendet. Bitte warten Sie auf eine E-Mail von unserem Support-Team."
 }

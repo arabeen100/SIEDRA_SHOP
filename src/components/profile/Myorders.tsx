@@ -9,33 +9,33 @@ const Myorders = () => {
       <Profilecard/>
       <div className="bg-white py-7 mt-3 rounded-2xl">
       <div className=" w-[80%] overflow-x-auto overflow-y-auto mx-auto ">
-      <table className=" border-collapse border-gray-100 text-sm text-right">
-        <thead className="bg-gray-100 text-gray-700">
-          <tr className="border-b border-gray-100">
-            <th className="p-3 ">{t("order_number")}</th>
-            <th className="p-3 whitespace-nowrap">{t("date_added")}</th>
-            <th className="p-3 ">{t("image")}</th>
-            <th className="p-3 ">{t("name")}</th>
-            <th className="p-3 ">{t("color")}</th>
-            <th className="p-3 ">{t("quantity")}</th>
-            <th className="p-3 ">{t("item_price")}</th>
-            <th className="p-3 ">{t("size")}</th>
-            <th className="p-3 ">{t("total")}</th>
-            <th className="p-3 ">{t("address")}</th>
-            <th className="p-3 ">{t("payment_gateway")}</th>
-            <th className="p-3 ">{t("payment_status")}</th>
-             <th className="p-3 ">{t("price")}</th>
-            <th className="p-3 ">{t("shipping")}</th>
-            <th className="p-3 ">{t("order_status")}</th>
+      <table className=" border-collapse border-gray-200 text-sm text-right">
+        <thead >
+          <tr className="border-b border-gray-200">
+            <th className="p-3 border-b  text-gray-600 border-gray-200 ">{t("order_number")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 whitespace-nowrap">{t("date_added")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("image")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("name")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("color")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("quantity")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("item_price")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("size")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("total")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("address")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("payment_gateway")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("payment_status")}</th>
+             <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("price")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("shipping")}</th>
+            <th className="p-3 border-b text-gray-600 border-gray-200 ">{t("order_status")}</th>
           </tr>
         </thead>
         <tbody>
           {orders?.data?.orders?.map((order) => (
-            <tr key={order.ID} className="border-b border-gray-100 text-gray-800">
-              <td className="p-3  font-bold">{order.Order_ID}</td>
-              <td className="p-3 ">{order.Adding_Date}</td>
+            <tr key={order.ID} className="border-b border-gray-200 text-gray-800">
+              <td className="p-3 border border-gray-200  font-bold">{order.Order_ID}</td>
+              <td className="p-3 border border-gray-200 ">{order.Adding_Date}</td>
               {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">
+              <td key={product.ID} className="p-3 border border-gray-200 ">
                 <img
                   src={product.Product.image}
                   alt={product.Product.name_du}
@@ -45,23 +45,23 @@ const Myorders = () => {
 
               )}
                {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">{i18n.language==="ar"?product.Product.name_ar:product.Product.name_du}</td>)}
+              <td key={product.ID} className="p-3 border border-gray-200 ">{i18n.language==="ar"?product.Product.name_ar:product.Product.name_du}</td>)}
                {order?.Products?.map((product:any)=>
-              <td key={product.ID} className="p-3 "><div className="w-3 h-3 rounded-full " style={{backgroundColor:product?.Color}}></div></td>)}
+              <td key={product.ID} className="p-3 border border-gray-200 "><div className="w-3 h-3 rounded-full " style={{backgroundColor:product?.Color}}></div></td>)}
                {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">{product.Count}</td>)}
+              <td key={product.ID} className="p-3 border border-gray-200 ">{product.Count}</td>)}
               {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">€{product.ItemPrice}</td>)}
+              <td key={product.ID} className="p-3 border border-gray-200 ">€{product.ItemPrice}</td>)}
                {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">{product.Size}</td>)}
+              <td key={product.ID} className="p-3 border border-gray-200 ">{product.Size}</td>)}
                {order?.Products?.map(product=>
-              <td key={product.ID} className="p-3 ">€{product.Total}</td>)}
-              <td className="p-3 ">{order.Address}</td>
-              <td className="p-3 ">{order.Payment_Gate}</td>
-              <td className="p-3 ">{order.Payment_Status}</td>
-              <td className="p-3 ">€{order.Price}</td>
-              <td className="p-3 ">€{order.Shipping}</td>
-              <td className="p-3 ">{order.Status}</td>
+              <td key={product.ID} className="p-3 border border-gray-200 ">€{product.Total}</td>)}
+              <td className="p-3 border border-gray-200 ">{order.Address}</td>
+              <td className="p-3 border border-gray-200 ">{order.Payment_Gate}</td>
+              <td className="p-3 border border-gray-200 ">{order.Payment_Status}</td>
+              <td className="p-3 border border-gray-200 ">€{order.Price}</td>
+              <td className="p-3 border border-gray-200 ">€{order.Shipping}</td>
+              <td className="p-3 border border-gray-200 ">{order.Status}</td>
             </tr>
           ))}
         </tbody>
