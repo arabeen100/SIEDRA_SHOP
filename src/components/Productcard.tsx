@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useAppSelector } from "../hooks/reduxTyped";
 import { useEffect,useState } from "react";
 const Productcard:React.FC<any> = ({product}) => {
+   
  const[isFavorite,setIsFavorite]=useState<boolean>(false);
     const [triggerWishlist] = useLazyGetWishListQuery();
     const{token}=useAppSelector((state)=>state.token);
@@ -71,6 +72,9 @@ const handleToogle=async(productName:string)=>{
       }} className="cursor-pointer absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100">
         <Heart size={18} className={isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"} />
       </button>
+      {product?.sale?.Value&&<div className="absolute top-3 left-4 text-white bg-red-600 p-1 rounded-lg text-xs">
+        -{product?.sale?.Value}%
+      </div>}
 
       
       <Link to={`/product/${product.name_du}`}  className="w-full flex justify-center">
@@ -88,9 +92,15 @@ const handleToogle=async(productName:string)=>{
       <Link to={`/product/${product.name_du}`} className="text-center flex flex-col gap-1">
         <p className="text-sm text-gray-500 whitespace-nowrap">{truncateText(i18n.language==="ar"? product.category.name_ar:product.category.name_du,10)}</p>
         <p className="text-sm font-medium text-gray-800 whitespace-nowrap">{truncateText(i18n.language==="ar"? product.name_ar:product.name_du,10)}</p>
-        <p className="text-lg font-bold text-gray-900">
+        <div className="flex justify-center gap-2 mt-2">
+           { product?.sale?.Value&&<p className="text-sm font-bold text-gray-900">
+            €{Number(product.price*((100-product?.sale?.Value)/100)).toFixed(2)}
+           </p>}
+        <p className={`${product?.sale?"line-through  text-gray-400":"text-gray-900"} text-sm font-bold `}>
           €{Number(product.price).toFixed(2)}
         </p>
+       
+        </div>
         <div className={`${product.colors.length<=0&&"bg-white mt-6.25"} flex gap-1 `}>
             {product.colors?.map((color:any,i:number)=>
                 <div key={i} style={{backgroundColor:color}} className="w-6 h-6 rounded-full"></div>

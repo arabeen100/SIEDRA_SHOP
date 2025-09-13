@@ -2,16 +2,23 @@ import { Globe, ShoppingBag, Heart, User, Store, Home ,Menu,Search,LogIn,Shoppin
 import { useTranslation } from "react-i18next";
 import { Link ,useNavigate} from "react-router-dom";
 import { useState,useEffect,useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from "../hooks/reduxTyped";
 import { setItem, setToken } from "../features/login/token";
+import { setSearch } from "../features/filters/filtersSlice";
 import { useLogOutMutation } from "../features/api/apiSlice";
 import { toast } from "react-toastify";
 import { useGetWishListQuery ,useGetSearchProductsQuery} from "../features/api/apiSlice";
+
+
 const Navbar = () => {
- 
-  const[search,setSearch]=useState<string>("");
-   const{data:searchProducts}=useGetSearchProductsQuery({name:search});
+  const{search}=useAppSelector((state)=>state.filters);
+ const {name}=useParams();
+   const{data:searchProducts}=useGetSearchProductsQuery
+   ({name:search});
+   const products = Array.isArray(searchProducts?.data?.products) 
+  ? searchProducts.data.products 
+  : [];
   const navigate=useNavigate();
   const {data:wishlist}=useGetWishListQuery({do:"view"});
   const [logout]=useLogOutMutation();
@@ -27,6 +34,8 @@ const Navbar = () => {
   const { t ,i18n} = useTranslation();
     const menuRef = useRef<HTMLDivElement>(null);
      const accountRef = useRef<HTMLDivElement>(null);
+     const searchRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -43,17 +52,27 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
     useEffect(() => {
     const handleClickOutside2 = (event: MouseEvent) => {
       if (accountRef.current && !accountRef.current.contains(event.target as Node)) { 
         setOpenAccount2(false);
       }
     };
-
-
     document.addEventListener("mousedown", handleClickOutside2);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside2);
+    };
+  }, []);
+    useEffect(() => {
+    const handleClickOutside3 = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) { 
+        setSearch("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside3);
+    return () => {
+     document.removeEventListener("mousedown", handleClickOutside3);
     };
   }, []);
   const handleLogout=async()=>{
@@ -236,11 +255,11 @@ const Navbar = () => {
          <Link className="lg:order-1" to={"/"}>
             <img src="	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="h-[50Px] min-w-[108px] object-contain  " />  
          </Link>
-         <div className="  w-[95%] h-10  fixed  top-18  left-[2.5%] md:static md:w-60 lg:order-2">
+         {pathname!==`/search/${name}`&&<div className={`  w-[95%] h-10  fixed  top-18  left-[2.5%] md:static md:w-60 lg:order-2`}>
           <input
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-           className=" border border-gray-300  w-full bg-white rounded-3xl p-2  outline-0 focus:border-gray-500"
+          onChange={(e)=>dispatch(setSearch(e.target.value))}
+           className={`  border border-gray-300  w-full bg-white rounded-3xl p-2  outline-0 focus:border-gray-500`}
           id='search'
           role='searchBox'
           type='text'
@@ -248,29 +267,35 @@ const Navbar = () => {
         />
         <Search className={` relative  bottom-7 ${i18n.language==="de"?"left-[91%]":"right-[91%]"}`} size={15} color="gray"/>
        
-        </div>
-         {searchProducts?.data?.products?.length&&search&&<div className={`fixed z-10 top-29 lg:w-[45%] ${i18n.language==="ar"?"lg:right-[6%] min-[1440px]:right-[15%]":"min-[1440px]:left-[15%] lg:left-[6%]"}  min-[1440px]:w-[35%]  md:top-20 p-4 w-[95%] bg-white rounded-2xl flex flex-col gap-3`}>
-        {searchProducts?.data?.products?.map(product=>
-          <div className="flex justify-between" key={product.id}>
+        </div>}
+      
+         {search&&pathname!==`/search/${name}`&&<div ref={searchRef} className={` overflow-y-auto fixed z-10 top-29 lg:w-[45%] ${i18n.language==="ar"?"lg:right-[6%] min-[1440px]:right-[15%]":"min-[1440px]:left-[15%] lg:left-[6%]"}  min-[1440px]:w-[35%]  md:top-20 p-4 w-[95%] bg-white rounded-2xl flex flex-col gap-3`}>
+        {products.length?( 
+          products.map(product=>
+          <Link onClick={()=>{
+            dispatch(setSearch(""));
+          }} to={`product/${product.name_du}`} className={` flex justify-between`} key={product.id}>
             <div className="flex gap-4 items-center">
                <img src={product.images[0]?.link} className="w-12 h-12"/>
-               <div className="flex flex-col">
-                <p className="text-sm text-gray-600">{i18n.language==="ar"?product.name_ar:product.name_du}</p>
+               <div className="flex flex-col ">
+                <p className={`text-sm text-gray-600 ${name&&name===product.name_du?"text-purple-600":""}`}>{i18n.language==="ar"?product.name_ar:product.name_du}</p>
                 <p className="text-xs text-gray-400">{i18n.language==="ar"?product.category?.name_ar:product.category?.name_du}</p>
                </div>
             </div>
             <div className="flex gap-7 items-center">
-              <p className="text-sm font-bold hidden sm:block">€{product.price}</p>
+              <p className={`text-sm font-bold hidden sm:block ${name&&name===product.name_du?"text-purple-600":""}`}>€{product.price}</p>
               <ArrowUpLeft size={19} className="text-purple-600 "/>
 
 
             </div>
-          </div>
-        )}
-        <Link onClick={()=>setSearch("")} className="w-full px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200 grid place-content-center" to={`search/${search}`}>
+          </Link>)):
+          <p className="text-center py-1">{t("no_products_found")}</p>
+        }
+        {products.length>0&&<Link onClick={()=>dispatch(setSearch(""))} className="w-full px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200 grid place-content-center" to={`search/${search}`}>
         Show All Products 
-        </Link>
-        </div>}
+        </Link>}
+        </div>
+        }
     
       
        

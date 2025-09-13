@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import  {apiSlice } from '../features/api/apiSlice';
 import tokenReducer from "../features/login/token"
+import sideBarReducer from "../features/sidebar/sideBar"
+import filtersReducer from "../features/filters/filtersSlice"
 export const store = configureStore({
     reducer:{
             [apiSlice.reducerPath]: apiSlice.reducer,
-            token:tokenReducer, 
+            token:tokenReducer,
+            sideBar:sideBarReducer,
+            filters:filtersReducer, 
 
     },
      middleware: (getDefaultMiddleware) =>

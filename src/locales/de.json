@@ -132,5 +132,9 @@
   "shipping": "Versand",
   "order_status": "Bestellstatus",
    "invalid_order_number": "Diese Bestellnummer ist ungültig.",
-   "return_request_success": "Die Rückgabeanfrage wurde erfolgreich gesendet. Bitte warten Sie auf eine E-Mail von unserem Support-Team."
+   "return_request_success": "Die Rückgabeanfrage wurde erfolgreich gesendet. Bitte warten Sie auf eine E-Mail von unserem Support-Team.",
+     "no_products_found": "Keine Produkte gefunden",
+      "price_from": "Preis von",
+       "to": "Bis",
+        "clear_filters": "Filter löschen"
 }

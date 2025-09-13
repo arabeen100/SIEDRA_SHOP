@@ -24,6 +24,7 @@ import { ToastContainer } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import 'react-toastify/dist/ReactToastify.css';
 import Search from './components/products/Search'
+import Subcategory from './components/categories/Subcategory'
 function App() {
   const {i18n}=useTranslation();
   useDirection();
@@ -37,8 +38,9 @@ function App() {
         <Route path='forgot-pass' element={<Forgotpass/>}/>
         <Route path='reset-pass' element={<Resetpass/>}/>
         <Route path='verify-email' element={<Verifyemail/>}/>
-        <Route path='category/:categoryName' element={<Category/>}/>
-        <Route path='product/:productName' element={<Product/>}/>
+        <Route path='category/:name' element={<Category/>}/>
+        <Route path='sub-category/:name' element={<Subcategory/>}/>
+        <Route path='product/:name' element={<Product/>}/>
         <Route path='products' element={<Products/>}/>
         <Route path='cart' element={<Cart/>}/>
         <Route path='checkout' element={<Checkout/>}/>

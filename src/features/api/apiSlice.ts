@@ -36,14 +36,14 @@ interface CarouselData {
   carousels: CarouselItem[]
 }
 interface Subcategory1 {
-  id: string
+  id: number| string;
   name_ar: string
   name_du: string
   total_subcategory_products: string
   category: Category1 
 }
 interface Category1 {
-  id: string
+  id: number|string;
   name_ar: string
   name_du: string
   add_date: string
@@ -178,8 +178,8 @@ interface GetProductParams {
 
 
  interface ProductFilters {
-  max_price: string | number;
-  min_price: string | number;
+  max_price:  number;
+  min_price:  number;
   colors: string[];
   sizes: string[];
 }
@@ -208,7 +208,7 @@ interface GetSalesParams {
     subcategoryName?: string
 }
 interface GetSearchProductsParams {
-    name: string
+    name: string|undefined
     limit?: number
     offset?: number
 }
