@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 import { Link ,useLocation} from "react-router-dom";
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css";
-import { setColor,setSize,setSort,setMinPrice,setMaxPrice } from "../features/filters/filtersSlice";
+import { setColor,setSize,setSort,setMinPrice,setMaxPrice  } from "../features/filters/filtersSlice";
 const Sidebar = ({products,sales}:any) => {
+  
   const{color,size}=useAppSelector((state)=>state.filters)
   const{range}=useAppSelector((state)=>state.sideBar)
   const[allProducts,setAllProducts]=useState<any>(null);
@@ -44,12 +45,23 @@ const Sidebar = ({products,sales}:any) => {
     dispatch(setRange([0,0]));
     dispatch(setMinPrice(0));
     dispatch(setMaxPrice(0));
+    
+    
   
   },[pathname]);
   useEffect(()=>{
     if(allProducts?.data?.filters&&range[0]===0&&range[1]===0){
-    dispatch(setRange([allProducts?.data?.filters?.min_price,allProducts?.data?.filters?.max_price]))};
+    dispatch(setRange([allProducts?.data?.filters?.min_price,allProducts?.data?.filters?.max_price]));
+  
+  };
   },[pathname,allProducts])
+  useEffect(()=>{
+    if(allProducts===sales){
+    dispatch(setRange([0,0]));
+      dispatch(setMinPrice(0));
+    dispatch(setMaxPrice(0));
+    dispatch(setCompleteChange(false));}
+  },[allProducts])
        useEffect(()=>{
              if(expanded){
                   document.body.classList.add("overflow-hidden");

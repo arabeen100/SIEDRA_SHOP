@@ -12,6 +12,7 @@ import { useGetWishListQuery ,useGetSearchProductsQuery} from "../features/api/a
 
 
 const Navbar = () => {
+
   const{search}=useAppSelector((state)=>state.filters);
  const {name}=useParams();
    const{data:searchProducts}=useGetSearchProductsQuery
@@ -35,7 +36,10 @@ const Navbar = () => {
     const menuRef = useRef<HTMLDivElement>(null);
      const accountRef = useRef<HTMLDivElement>(null);
      const searchRef = useRef<HTMLDivElement>(null);
-
+     useEffect(()=>{
+      if(pathname!==`/search/${name}`)
+      dispatch(setSearch(""));
+     },[pathname])
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -67,7 +71,7 @@ const Navbar = () => {
     useEffect(() => {
     const handleClickOutside3 = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) { 
-        setSearch("");
+        dispatch(setSearch(""));
       }
     };
     document.addEventListener("mousedown", handleClickOutside3);
@@ -291,7 +295,7 @@ const Navbar = () => {
           </Link>)):
           <p className="text-center py-1">{t("no_products_found")}</p>
         }
-        {products.length>0&&<Link onClick={()=>dispatch(setSearch(""))} className="w-full px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200 grid place-content-center" to={`search/${search}`}>
+        {products.length>0&&<Link  className="w-full px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200 grid place-content-center" to={`search/${search}`}>
         Show All Products 
         </Link>}
         </div>
