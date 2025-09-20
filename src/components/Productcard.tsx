@@ -1,13 +1,13 @@
 import { Heart } from "lucide-react"; 
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {useLazyGetWishListQuery,useGetWishListQuery} from "../features/api/apiSlice";;
+import {useLazyGetWishListQuery,useGetWishListQuery} from "../features/api/apiSlice";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../hooks/reduxTyped";
 import { useEffect,useState } from "react";
 const Productcard:React.FC<any> = ({product}) => {
    
- const[isFavorite,setIsFavorite]=useState<boolean>(false);
+ const[isFavorite,setIsFavorite]=useState<any>(false);
     const [triggerWishlist] = useLazyGetWishListQuery();
     const{token}=useAppSelector((state)=>state.token);
     const{i18n,t}=useTranslation();
@@ -26,9 +26,9 @@ useEffect(()=>{
   const isInWishlist = wishlist?.data?.wishlist_items?.some((wishlistItem) => wishlistItem.id === product.id);
 
   useEffect(()=>{
-    if(isInWishlist){
+   
       setIsFavorite(isInWishlist);
-    }
+
   },[isInWishlist])
  
 const handleToogle=async(productName:string)=>{
@@ -56,7 +56,7 @@ const handleToogle=async(productName:string)=>{
            }
         } catch (error) {
             console.log(error);
-            setIsFavorite((prev)=>!prev)
+            setIsFavorite((prev:any)=>!prev)
         }
     }
       
@@ -101,7 +101,7 @@ const handleToogle=async(productName:string)=>{
         </p>
        
         </div>
-        <div className={`${product.colors.length<=0&&"bg-white mt-6.25"} flex gap-1 `}>
+        <div className={`${product.colors.length<=0&&"bg-white mt-6.25"} flex gap-1 justify-center `}>
             {product.colors?.map((color:any,i:number)=>
                 <div key={i} style={{backgroundColor:color}} className="w-6 h-6 rounded-full"></div>
             )}

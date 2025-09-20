@@ -169,7 +169,7 @@ const slides =
             768:{slidesPerView:3
 
             },
-            1500:{slidesPerView:5}
+            1440:{slidesPerView:5}
           }}
           className="w-full">
                {recommendations?.data?.products?.map(product=>

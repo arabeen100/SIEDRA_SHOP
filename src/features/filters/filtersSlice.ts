@@ -7,7 +7,7 @@ interface filtersState {
   sort: string;
   minPrice: number;
   maxPrice: number;
-  search:string
+  search:string;
 }
 
 const initialState: filtersState = {
@@ -16,7 +16,7 @@ const initialState: filtersState = {
   sort:"",
   minPrice:0,
   maxPrice:0,
-  search:""
+  search:"",
 };
 
 const filtersSlice = createSlice({
@@ -41,6 +41,7 @@ const filtersSlice = createSlice({
       setSearch: (state, { payload }: PayloadAction<string>) => {
       state.search = payload;
       },
+  
  
   },
 });

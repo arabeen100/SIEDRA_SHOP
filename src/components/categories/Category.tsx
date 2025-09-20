@@ -15,7 +15,7 @@ const Category = () => {
     const{color,size,sort,minPrice,maxPrice}=useAppSelector((state)=>state.filters)
      const{enabled}=useAppSelector((state)=>state.sideBar)
     const[limit,setLimit]=useState<number>(12);
-    const{data:sales,error:err}=useGetSalesQuery({color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice},{skip:!enabled});
+    const{data:sales,error:err}=useGetSalesQuery({category:name?.replace(/\s+/g, "-"),color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice},{skip:!enabled});
     const{data:products,error}=useGetCategoryProductsQuery({categoryName:name?.replace(" ","-"),color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice});
     const{t,i18n}=useTranslation();
     const dispatch=useAppDispatch();

@@ -137,6 +137,14 @@
       "no_products_found": "لم يتم العثور على منتجات",
        "price_from": "السعر من",
          "to": "إلى",
-          "clear_filters": "مسح الفلاتر"
+          "clear_filters": "مسح الفلاتر",
+           "seconds": "ثواني",
+            "minutes": "دقائق",
+            "hours": "ساعات",
+            "days": "أيام",
+              "only_available": "يوجد فقط",
+                "piece_in_stock": "قطعة في المخزن",
+                 "added_to_cart": "تمت الإضافة إلى السلة!",
+                   "dimensions": "الأبعاد"
       
 }

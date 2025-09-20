@@ -5,16 +5,15 @@ import { setCompleteChange, setEnabled, setRange, toggleExpanded } from "../feat
 import { useTranslation } from "react-i18next";
 import { useGetCategoriesQuery } from "../features/api/apiSlice";
 import { useEffect, useState } from "react";
-import { Link ,useLocation} from "react-router-dom";
+import { Link ,useLocation,useParams} from "react-router-dom";
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css";
 import { setColor,setSize,setSort,setMinPrice,setMaxPrice  } from "../features/filters/filtersSlice";
 const Sidebar = ({products,sales}:any) => {
-  
-  const{color,size}=useAppSelector((state)=>state.filters)
+  const{name}=useParams();
+  const{color,size,minPrice,maxPrice}=useAppSelector((state)=>state.filters)
   const{range}=useAppSelector((state)=>state.sideBar)
   const[allProducts,setAllProducts]=useState<any>(null);
-  const filters=allProducts?.data?.filters;
   const {pathname}=useLocation(); 
     const{enabled}=useAppSelector((state)=>state.sideBar)
     const[priceClicked,setPriceClicked]=useState<boolean>(false);
@@ -42,26 +41,29 @@ const Sidebar = ({products,sales}:any) => {
     dispatch(setSort(""));
     dispatch(setEnabled(false));
     dispatch(setCompleteChange(false));
-    dispatch(setRange([0,0]));
+    dispatch(setRange([0,0]))
     dispatch(setMinPrice(0));
-    dispatch(setMaxPrice(0));
-    
-    
-  
-  },[pathname]);
+    dispatch(setMaxPrice(0)); 
+  },[pathname,name]); 
+    useEffect(()=>{
+    if(allProducts&& minPrice===0 && maxPrice===0){
+      dispatch(setRange([0,0]));
+    }
+  },[allProducts,pathname])
   useEffect(()=>{
     if(allProducts?.data?.filters&&range[0]===0&&range[1]===0){
-    dispatch(setRange([allProducts?.data?.filters?.min_price,allProducts?.data?.filters?.max_price]));
-  
-  };
-  },[pathname,allProducts])
+        dispatch(setRange([allProducts?.data?.filters?.min_price,allProducts?.data?.filters?.max_price]))};
+   /*   }else if(allProducts?.data?.products?.length===0){
+      dispatch(setRange([products?.data?.filters?.min_price,products?.data?.filters?.max_price]))
+    } */
+  },[allProducts,products,pathname,range])
   useEffect(()=>{
-    if(allProducts===sales){
     dispatch(setRange([0,0]));
-      dispatch(setMinPrice(0));
+    dispatch(setCompleteChange(false));
+    dispatch(setMinPrice(0));
     dispatch(setMaxPrice(0));
-    dispatch(setCompleteChange(false));}
-  },[allProducts])
+  },[enabled])
+
        useEffect(()=>{
              if(expanded){
                   document.body.classList.add("overflow-hidden");
@@ -74,11 +76,7 @@ const Sidebar = ({products,sales}:any) => {
       
        },[expanded])
 
-  useEffect(()=>{
-    if(filters&&range[0]===0&&range[1]===0){
-        dispatch(setRange(([Number(allProducts?.data?.filters?.min_price),Number(allProducts?.data?.filters?.max_price)])))
-    }
-  },[filters])
+
   return (
     <>
      {expanded && (

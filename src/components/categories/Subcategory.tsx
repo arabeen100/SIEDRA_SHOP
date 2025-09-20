@@ -15,8 +15,8 @@ const Subcategory = () => {
       const{color,size,sort,minPrice,maxPrice}=useAppSelector((state)=>state.filters)
        const{enabled}=useAppSelector((state)=>state.sideBar)
       const[limit,setLimit]=useState<number>(12);
-      const{data:sales,error:err}=useGetSalesQuery({color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice},{skip:!enabled});
-      const{data:products,error}=useGetSubcategoryProductsQuery({subcategoryName:name?.replace(" ","-"),color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice});
+      const{data:sales,error:err}=useGetSalesQuery({subcategory:name?.replace(" ","-"),color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice},{skip:!enabled});
+      const{data:products,error}=useGetSubcategoryProductsQuery({subcategoryName:name?.replace(/\s+/g, "-"),color:color,size:size,sort:sort,limit:limit,offset:0,min_price:minPrice,max_price:maxPrice});
       const{t,i18n}=useTranslation();
       const dispatch=useAppDispatch();
        useEffect(()=>{

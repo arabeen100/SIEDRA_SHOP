@@ -136,5 +136,14 @@
      "no_products_found": "Keine Produkte gefunden",
       "price_from": "Preis von",
        "to": "Bis",
-        "clear_filters": "Filter löschen"
+        "clear_filters": "Filter löschen",
+         "days": "Tage",
+          "hours": "Stunden",
+           "minutes": "Minuten",
+             "seconds": "Sekunden",
+             "piece_in_stock": "Stück auf Lager",
+              "only_available": "Nur verfügbar",
+               "added_to_cart": "Zum Warenkorb hinzugefügt!",
+                "dimensions": "Abmessungen"
+
 }

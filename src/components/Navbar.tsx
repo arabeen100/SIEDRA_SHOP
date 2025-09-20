@@ -8,11 +8,11 @@ import { setItem, setToken } from "../features/login/token";
 import { setSearch } from "../features/filters/filtersSlice";
 import { useLogOutMutation } from "../features/api/apiSlice";
 import { toast } from "react-toastify";
-import { useGetWishListQuery ,useGetSearchProductsQuery} from "../features/api/apiSlice";
+import { useGetWishListQuery ,useGetSearchProductsQuery,useGetCartQuery} from "../features/api/apiSlice";
 
 
 const Navbar = () => {
-
+ const{data:cartItems}=useGetCartQuery({do:"view"});
   const{search}=useAppSelector((state)=>state.filters);
  const {name}=useParams();
    const{data:searchProducts}=useGetSearchProductsQuery
@@ -241,8 +241,9 @@ const Navbar = () => {
           <p className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.favorites")}</p>
         
         </Link>
-        <Link className="lg:flex lg:flex-col lg:items-center lg:gap-1  lg:order-8 group" to={"/cart"}>
+        <Link className="relative lg:flex lg:flex-col lg:items-center lg:gap-1  lg:order-8 group" to={"/cart"}>
           <ShoppingBag className={`${pathname==="/cart"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}size={18}/>
+          {cartItems?.data?.cart_items&&<p className=" grid place-content-center absolute bottom-2.5 left-2.5 lg:bottom-9 lg:left-5 w-4 h-4 text-xs rounded-full bg-purple-700 text-white">{cartItems?.data?.cart_items?.length}</p>}
              <p className={`${pathname==="/cart"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500 max-lg:hidden `}>{t("navbar.cart")}</p>
         </Link>
         <button className="lg:order-8 flex order-last flex-col gap-1  items-center gap-.5 cursor-pointer text-gray-500 hover:text-purple-500 group" onClick={()=>{

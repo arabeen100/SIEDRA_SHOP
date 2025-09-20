@@ -106,11 +106,21 @@ interface GetCategoryProductsParams {
     min_price?: number
     max_price?: number
 }
+interface GetSubcategoryProductsParams {
+    subcategoryName?: string
+    color?: string
+    size?: string
+    sort?: string
+    limit?: number
+    offset?: number
+    min_price?: number
+    max_price?: number
+}
 interface GetMostVisitedParams {
   limit?: number
 }
 interface GetProductParams {
-  productName: string
+  name?: string
 }
 
  interface Category {
@@ -162,7 +172,7 @@ interface GetProductParams {
   shippingPrice: string | number;
   shippingTime: string | number;
   availability: boolean | number;
-  sale: Sale | 0;
+  sale: Sale | null;
   visits: string | number;
   sales: string | number;
   rating: string | number;
@@ -189,7 +199,8 @@ interface GetProductParams {
   status: boolean;
   message: string;
   data: {
-    products: Product[];
+    products?: Product[];
+    product?:Product;
     total_filter_products?: string | number;
     filters?: ProductFilters;
     category?: Category;
@@ -204,8 +215,8 @@ interface GetSalesParams {
     offset?: number
     min_price?: number
     max_price?: number
-    categoryName?: string
-    subcategoryName?: string
+    category?: string
+    subcategory?: string
 }
 interface GetSearchProductsParams {
     name: string|undefined
@@ -221,11 +232,57 @@ interface GetRatingParams {
   rating: number;
 }
 // Cart item type
- interface CartItem {
-  ID: number;
-  Name: string;
-  Price: number;
+interface Category {
+  id: number|string;
+  name_ar: string;
+  name_du: string;
+  add_date: string;
+  Image_link: string;
+  Cover_Image_link: string;
+  total_category_products: number|string;
 }
+
+interface Subcategory {
+  id: number|string;
+  name_ar: string;
+  name_du: string;
+  total_subcategory_products: number|string;
+  category: Category;
+}
+
+interface CartItem {
+  id: number;
+  name_ar: string;
+  name_du: string;
+  description_ar: string;
+  description_du: string;
+  notes_ar: string | null;
+  notes_du: string | null;
+  price: number;
+  count: number;
+  shippingPrice: number;
+  shippingTime: number;
+  availability: boolean;
+  sale: number; // or Sale if مش دايماً 0
+  visits: number;
+  sales: number;
+  rating: number;
+  ratingCount: number;
+  add_date: string;
+  dimensions: any[]; // تقدر تعمل لها type منفصل لو عندك
+  colors: string[];
+  sizes: any[]; // برضه تقدر تعمل type منفصل
+  images: any[]; // ممكن تعملها interface Image[]
+  category: Category;
+  subcategory: Subcategory;
+  quantity: number;
+  selectedColor: string | null;
+  selectedSize: string | null;
+  selectedDimension: string | null;
+  total: number;
+  cart_id: number;
+}
+
  interface CartResponse {
   cart_items: CartItem[];
 }
@@ -357,9 +414,7 @@ interface WishlistResponse {
 interface WishlistActionResponse {
   message: string;
 }
-interface CartActionResponse {
-  message: string;
-}
+
 
 
 
@@ -508,8 +563,8 @@ export const apiSlice = createApi({
                 })
         }),
             getProduct:builder.query<ProductsResponse,GetProductParams>({
-                query:({productName})=>({
-                    url:`/products/product/${productName}`,
+                query:({name})=>({
+                    url:`/products/product/${name}`,
                 })
         }), 
             getProducts:builder.query<ProductsResponse,GetCategoryProductsParams>({
@@ -541,7 +596,7 @@ export const apiSlice = createApi({
                 }) 
         }),
             getSales:builder.query<ProductsResponse,GetSalesParams>({
-                query:({color,size,sort,limit,offset,min_price,max_price,categoryName,subcategoryName})=>({
+                query:({color,size,sort,limit,offset,min_price,max_price,category,subcategory})=>({
                     url:'/products/sales',
                     params:{
                         ...(color && {color}),
@@ -551,8 +606,8 @@ export const apiSlice = createApi({
                         ...(offset && {offset}),
                         ...(min_price && {min_price}),
                         ...(max_price && {max_price}),
-                        ...(categoryName && {categoryName}),
-                        ...(subcategoryName && {subcategoryName}),
+                        ...(category && {category}),
+                        ...(subcategory && {subcategory}),
                     }
 
                 }),
@@ -567,7 +622,7 @@ export const apiSlice = createApi({
                     }
                 })
         }),
-            getSubcategoryProducts:builder.query<ProductsResponse,GetSalesParams>({
+            getSubcategoryProducts:builder.query<ProductsResponse,GetSubcategoryProductsParams>({
                 query:({subcategoryName,color,size,sort,limit,offset,min_price,max_price})=>({
                     url:`/products/subcategory/${subcategoryName}`,
                     params:{
@@ -581,7 +636,7 @@ export const apiSlice = createApi({
                     }
                 })
         }),
-            getCart:builder.query<CartResponse|CartActionResponse,GetCartParams>({
+            getCart:builder.query<ApiResponse<CartResponse>,GetCartParams>({
                 query:({do:action,product,id})=>{
                     const token=localStorage.getItem("userToken");
                     switch (action) {
@@ -589,6 +644,7 @@ export const apiSlice = createApi({
                             return {
                                 url:'/profile/cart',
                                 method:'GET',
+                                params:{do:action},
                                 headers:{
                     "Authorization":`Bearer ${token}`
                       }
@@ -597,6 +653,7 @@ export const apiSlice = createApi({
                             return {
                                 url:'/profile/cart',
                                 method:'POST',
+                                params:{do:action},
                                 body:product,
                                 headers:{
                     "Authorization":`Bearer ${token}`
@@ -607,7 +664,7 @@ export const apiSlice = createApi({
                     return {
                         url:`/profile/cart`,
                         method:'GET',
-                        params:{id},
+                        params:{do:action,id},
                              headers:{
                     "Authorization":`Bearer ${token}`
                     }  
@@ -617,7 +674,7 @@ export const apiSlice = createApi({
                         url:`/profile/cart`,
                         method:'POST',
                         body:product,
-                        params:{id},
+                        params:{do:action,id},
                              headers:{
                     "Authorization":`Bearer ${token}`
                    }
@@ -626,6 +683,7 @@ export const apiSlice = createApi({
                 return {
                     url:'/profile/cart',
                     method:'GET',
+                    params:{do:action},
                          headers:{
                     "Authorization":`Bearer ${token}`
                   }  
@@ -738,6 +796,7 @@ export const apiSlice = createApi({
 })
 
 export const {
+  useLazyGetCartQuery,
    useLazyGetWishListQuery,
     useRegisterMutation,
     useVerifyEmailMutation,
