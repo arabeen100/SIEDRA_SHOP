@@ -9,7 +9,7 @@ import { Link ,useLocation,useParams} from "react-router-dom";
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css";
 import { setColor,setSize,setSort,setMinPrice,setMaxPrice  } from "../features/filters/filtersSlice";
-const Sidebar = ({products,sales}:any) => {
+const Sidebar = ({products,sales,err}:any) => {
   const{name}=useParams();
   const{color,size,minPrice,maxPrice}=useAppSelector((state)=>state.filters)
   const{range}=useAppSelector((state)=>state.sideBar)
@@ -62,6 +62,9 @@ const Sidebar = ({products,sales}:any) => {
     dispatch(setCompleteChange(false));
     dispatch(setMinPrice(0));
     dispatch(setMaxPrice(0));
+    dispatch(setColor(""));
+    dispatch(setSize(""));
+    dispatch(setSort(""));
   },[enabled])
 
        useEffect(()=>{
@@ -113,7 +116,7 @@ const Sidebar = ({products,sales}:any) => {
                 </li>
             )}
          </ul>
-          {allProducts?.data?.filters?.sizes?.length>0&& <div className="flex flex-col w-[80%] border border-gray-200 rounded-lg  mt-10 gap-4.5 px-3">
+          {allProducts?.data?.filters?.sizes?.length>0&&!err&& <div className="flex flex-col w-[80%]   rounded-lg  mt-10 gap-4.5 px-3.5">
             <p className=" text-xs md:text-[16px] font-bold text-gray-600 pt-2">{t("size")}</p>
           <div className="flex gap-3 pb-2">
               {allProducts?.data?.filters?.sizes.map((sizee:string,i:number)=>
@@ -179,7 +182,7 @@ const Sidebar = ({products,sales}:any) => {
             
 
          </div>
-         {allProducts?.data?.filters?.colors?.length>0&&<div className="flex flex-col w-[80%] border border-gray-200 rounded-lg  mt-10 py-2">
+         {allProducts?.data?.filters?.colors?.length>0&&!err&&<div className="flex flex-col w-[80%] border border-gray-200 rounded-lg  mt-10 py-2">
            <div className="flex justify-between px-3">
             <p className=" text-xs md:text-[16px] font-bold text-gray-600 ">{t("color")}</p>
             <ChevronDown onClick={()=>setColorClicked(!ColorClicked)} size={18}  className= {` cursor-pointer transition-transform duration-300 ${

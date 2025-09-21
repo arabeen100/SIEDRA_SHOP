@@ -37,7 +37,7 @@ const Category = () => {
        </div>
        <div className="flex gap-1 w-full">
        <div>
-       <Sidebar products={products} sales={sales} />
+       <Sidebar err={err} products={products} sales={sales} />
        </div>
        <div className="flex flex-col gap-3 w-full ">
        <img src={products?.data?.category?.Cover_Image_link} className=" object-cover object-center rounded-lg w-[95%] h-[230px] sm:h-[300px] mx-auto md:w-[400px] lg:w-[556px] md:h-[250px] " loading="lazy"/>
