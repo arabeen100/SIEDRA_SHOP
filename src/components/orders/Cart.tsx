@@ -4,10 +4,15 @@ import { useGetCartQuery, useLazyGetCartQuery,useGetCouponQuery } from "../../fe
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
+import { useAppDispatch,useAppSelector } from "../../hooks/reduxTyped";
+import { setApply, setCoupon } from "../../features/coupon/coupon";
+
 const Cart = () => {
-  const[coupon,setCoupon]=useState<string>("");
-  const[apply,setApply]=useState<boolean>(false);
+  const {pathname}=useLocation();
+  const[flag,setFlag]=useState<boolean>(false);
+  const{coupon,apply}=useAppSelector((state)=>state.coupon);
+  const dsipatch=useAppDispatch();
   const{data:couponData,error,isFetching}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!apply});
   const[subtotal,setSubTotal]=useState<number>(0);
   const[shipping,setShipping]=useState<number>(0);
@@ -16,9 +21,9 @@ const Cart = () => {
   const{i18n,t}=useTranslation();
   useEffect(()=>{
      if(error){
-      setApply(false);
+      dsipatch(setApply(false));
       toast.error(t("enter_valid_coupon"))
-     }else if(apply&&couponData&&!error&&!isFetching){
+     }else if(apply&&couponData&&!error&&!isFetching&&flag){
       toast.success(t("coupon_applied"))
      }
   },[error,couponData,apply,isFetching])
@@ -27,6 +32,10 @@ const Cart = () => {
       console.log(cart)
     }
   },[cart])
+  useEffect(()=>{
+    setFlag(true)
+    
+  },[pathname])
   useEffect(()=>{
     if(!cart?.data?.cart_items){
       setShipping(0);
@@ -63,6 +72,7 @@ const Cart = () => {
                 const response= await triggerCart({do:"remove",id:cartId}).unwrap();
                 if(response.status){
                  await triggerCart({do:"view"});
+                 toast.error(t("removed_from_cart"))
                 }
              } catch (error) {
                  console.log(error)
@@ -218,7 +228,7 @@ const Cart = () => {
       <div className="bg-white rounded-lg  w-full p-6  flex flex-col gap-5 sm:flex-row sm:justify-between">
         <form onSubmit={(e)=>{
           e.preventDefault();
-          setApply(true);
+          dsipatch(setApply(true));
           
         }} className="mx-auto sm:mx-0 flex flex-col gap-3.5 sm:gap-2 w-[80%] sm:w-[50%]">
           {(!apply||error||!couponData)&&<label htmlFor="coupon">{t("cart.coupon_code")}</label>}
@@ -230,11 +240,11 @@ const Cart = () => {
           name="coupon"
           type="text"
           value={coupon}
-          onChange={(e)=>setCoupon(e.target.value)}
+          onChange={(e)=>dsipatch(setCoupon(e.target.value))}
           />}
           {(!apply||error||!couponData)&&<button type="submit"  className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-purple-600 text-purple-600 w-full hover:bg-purple-600 hover:text-white">{t("cart.apply")}</button>}
-          {apply&&couponData&&!error&&<button  onClick={()=>{setApply(false);
-            setCoupon("");
+          {apply&&couponData&&!error&&<button  onClick={()=>{dsipatch(setApply(false));
+           dsipatch(setCoupon(""));
           }} className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-red-600 text-red-600 w-full hover:bg-red-600 hover:text-white">Remove Coupon</button>}
 
         </form>

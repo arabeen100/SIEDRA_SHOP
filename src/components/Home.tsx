@@ -62,9 +62,9 @@ const slides =
         pagination={{clickable:true}}
       >
         {carousels?.data?.carousels?.map(carousel=>
-          <SwiperSlide className="w-fit h-fit "  key={carousel.ID}>
-            <div className="relative w-[95%] md:w-[768px] lg:w-[976px] lg:h-[549.891px] md:h-[432.688px] xl:w-[1440px] xl:h-[811.312px] h-[52vw] mx-auto rounded-2xl  ">
-              <img className='w-full h-full rounded-2xl object-center object-cover brightness-70' src={carousel.Image_link} />
+          <SwiperSlide className="w-fit h-fit  "  key={carousel.ID}>
+            <div className="relative w-[95%] md:w-[768px] lg:w-[976px] lg:h-[549.891px] md:h-[432.688px] xl:w-[1440px] xl:h-[811.312px] h-[52vw] mx-auto rounded-2xl">
+              <img className='w-full h-full rounded-2xl object-center object-cover brightness-70 ' src={carousel.Image_link} />
               <div  className={`w-[60%] absolute text-white sm:top-[40%] z-50 top-[20%] left-[20%] ${carousel.ID!==2&&"hidden" } text-center `}>
               <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold">{t("home.shop_and_get_offers")}</p>
                <p className="text-sm mt-2">{t("home.eu_shipping")}</p>

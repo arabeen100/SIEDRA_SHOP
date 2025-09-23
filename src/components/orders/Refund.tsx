@@ -58,7 +58,7 @@ const Refund = () => {
             </ul>}
           <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 flex justify-center gap-2 cursor-pointer">
           <p>{t("form.return_reason")}</p>
-          {isLoading&& <SpinnerCircular size={20} color="white" className=""/>}
+          {isLoading&& <SpinnerCircular size={20} color="white"/>}
           </button>
         </form>
       </div>  

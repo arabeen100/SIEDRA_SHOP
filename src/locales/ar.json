@@ -148,7 +148,10 @@
                    "dimensions": "الأبعاد",
                       "product": "المنتج",
                       "coupon_applied": "تم تطبيق الكوبون!",
-                       "enter_valid_coupon": "أدخل كوبون صالح!"
+                       "enter_valid_coupon": "أدخل كوبون صالح!",
+                        "out_of_stock": "لقد نفذت الكمية",
+                         "removed_from_cart": "تمت إزالة العنصر من السلة!"
+                        
                       
       
 }

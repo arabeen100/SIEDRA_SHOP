@@ -187,7 +187,7 @@ const Product = () => {
         <button onClick={()=>{handleToogle(product?.data?.product?.name_du);
          setIsFavorite(!isFavorite);
 
-        }} className={`${isFavorite?"border-red-500":"border-purple-600"} cursor-pointer relative flex justify-center items-center w-full p-2 rounded-lg border  hover:border-gray-300 active:scale-95 transition-transform`}>
+        }} className={`${isFavorite?"border-red-500":"border-purple-600"} bg-gray-200  cursor-pointer relative flex justify-center items-center w-full p-2 rounded-lg border  hover:border-gray-300 active:scale-95 transition-transform`}>
           <p>{t("product.add_to_wishlist")}</p>
           <Heart className={`${isFavorite&& "text-red-500 fill-red-500"} absolute left-3`}  size={21}/>
         </button>

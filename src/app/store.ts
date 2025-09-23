@@ -3,12 +3,14 @@ import  {apiSlice } from '../features/api/apiSlice';
 import tokenReducer from "../features/login/token"
 import sideBarReducer from "../features/sidebar/sideBar"
 import filtersReducer from "../features/filters/filtersSlice"
+import couponReducer from "../features/coupon/coupon"
 export const store = configureStore({
     reducer:{
             [apiSlice.reducerPath]: apiSlice.reducer,
             token:tokenReducer,
             sideBar:sideBarReducer,
-            filters:filtersReducer, 
+            filters:filtersReducer,
+            coupon:couponReducer, 
 
     },
      middleware: (getDefaultMiddleware) =>
