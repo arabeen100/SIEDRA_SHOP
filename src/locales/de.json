@@ -144,6 +144,9 @@
              "piece_in_stock": "Stück auf Lager",
               "only_available": "Nur verfügbar",
                "added_to_cart": "Zum Warenkorb hinzugefügt!",
-                "dimensions": "Abmessungen"
+                "dimensions": "Abmessungen",
+                  "product": "Produkt",
+                    "enter_valid_coupon": "Geben Sie einen gültigen Gutschein ein!",
+                     "coupon_applied": "Der Gutschein wurde angewendet!"
 
 }

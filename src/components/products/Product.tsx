@@ -82,7 +82,8 @@ const Product = () => {
            try {
               const response= await triggerCart({do:"add",product:{...productt,quantity:count,selectedColor:selectedColor,selectedSize:selectedSize,selectedDimension:selectedDimension}}).unwrap();
               if(response.status){
-               toast.success(t("added_to_cart"))
+               toast.success(t("added_to_cart"));
+               await triggerCart({do:"view"});
               }
            } catch (error) {
                console.log(error)

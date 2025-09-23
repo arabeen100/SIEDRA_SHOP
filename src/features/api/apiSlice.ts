@@ -276,7 +276,7 @@ interface CartItem {
   category: Category;
   subcategory: Subcategory;
   quantity: number;
-  selectedColor: string | null;
+  selectedColor: any;
   selectedSize: string | null;
   selectedDimension: string | null;
   total: number;
@@ -490,7 +490,7 @@ export const apiSlice = createApi({
                 body:contact,
             })}
         }),
-           getCoupon:builder.query<Coupon,GetCouponParams>({
+           getCoupon:builder.query<ApiResponse<Coupon>,GetCouponParams>({
             query:({coupon})=>({
                 url:'/orders/coupon',
                 params:{coupon},

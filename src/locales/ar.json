@@ -145,6 +145,10 @@
               "only_available": "يوجد فقط",
                 "piece_in_stock": "قطعة في المخزن",
                  "added_to_cart": "تمت الإضافة إلى السلة!",
-                   "dimensions": "الأبعاد"
+                   "dimensions": "الأبعاد",
+                      "product": "المنتج",
+                      "coupon_applied": "تم تطبيق الكوبون!",
+                       "enter_valid_coupon": "أدخل كوبون صالح!"
+                      
       
 }
