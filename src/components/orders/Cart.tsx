@@ -28,6 +28,12 @@ const Cart = () => {
     }
   },[cart])
   useEffect(()=>{
+    if(!cart?.data?.cart_items){
+      setShipping(0);
+      setSubTotal(0);
+    }
+  },[cart])
+  useEffect(()=>{
     if(cart?.data?.cart_items){
       setSubTotal(0);
       setShipping(0);
@@ -232,9 +238,9 @@ const Cart = () => {
           }} className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-red-600 text-red-600 w-full hover:bg-red-600 hover:text-white">Remove Coupon</button>}
 
         </form>
-        <div className="flex flex-col gap-5 sm:gap-6.5">
+        <div className="flex flex-col gap-5 justify-center sm:gap-6.5">
         <Link to={"/products"} className=" text-purple-600 transition-colors duration-300 w-full grid place-content-center p-2.5 rounded-lg border border-purple-600 hover:bg-purple-600 hover:text-white">{t("cart.continue_shopping")}</Link>
-        <Link to={"/confirm-order"} className="text-white w-full grid place-content-center p-2.5 rounded-lg bg-purple-600 ">{t("cart.place_order")}</Link>
+        {cart?.data?.cart_items&&<Link to={"/confirm-order"} className="text-white w-full grid place-content-center p-2.5 rounded-lg bg-purple-600 ">{t("cart.place_order")}</Link>}
         </div>
 
       </div>
