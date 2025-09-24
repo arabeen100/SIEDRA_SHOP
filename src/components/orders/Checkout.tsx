@@ -4,7 +4,7 @@ import { useGetPaymentInfoQuery } from "../../features/api/apiSlice"
 import { useEffect } from "react";
 import ProtectedStep from "../ProtectedStep";
 const Checkout = () => {
-const{data:paymentInfo}=useGetPaymentInfoQuery(localStorage.getItem("orderId")||"");
+const{data:paymentInfo}=useGetPaymentInfoQuery(localStorage.getItem("orderId")||"",{skip:!localStorage.getItem("orderId")});
 useEffect(()=>{
   if(paymentInfo){
     console.log(paymentInfo);}
