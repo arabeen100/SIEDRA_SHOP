@@ -78,7 +78,7 @@ const Product = () => {
       }
    }
    const handleAddToCart=async(productt:any)=>{
-      
+      if(token){
            try {
               const response= await triggerCart({do:"add",product:{...productt,quantity:count,selectedColor:selectedColor,selectedSize:selectedSize,selectedDimension:selectedDimension}}).unwrap();
               if(response.status){
@@ -90,6 +90,9 @@ const Product = () => {
                console.log(error)
                
            }
+          }else{
+            toast.error(t("please_login_first"))
+          }
          
    }
   return (
