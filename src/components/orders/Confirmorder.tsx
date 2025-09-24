@@ -8,18 +8,13 @@ import { useNavigate } from "react-router-dom";
 import ProtectedStep from "../ProtectedStep";
 const Confirmorder = () => {
   const navigate=useNavigate();
-  const[checkout,{isLoading,data:checkoutData}]=useCheckOutMutation();
+  const[checkout,{isLoading}]=useCheckOutMutation();
   const{data:profile}=useGetProfileQuery();
   const[name,setName]=useState<string>("");
   const[email,setEmail]=useState<string>("");
   const[phone,setPhone]=useState<string>("");
   const[address,setAddress]=useState<string>("");
   const[note,setNote]=useState<string>("");
-  useEffect(()=>{
-    if(checkoutData){
-      localStorage.setItem("orderId",checkoutData?.data?.payment_info?.order_id);
-    }
-  },[checkoutData])
   useEffect(()=>{
     if(profile){
       setName(profile?.data?.user?.name);
@@ -61,6 +56,7 @@ const Confirmorder = () => {
        const response= await checkout(formData).unwrap();
         if(response.status){
           navigate("/checkout",{state:{from:"confirm"}});
+          localStorage.setItem("orderId",response?.data?.payment_info?.order_id);
         }
       } catch (error) {
         console.log(error);
