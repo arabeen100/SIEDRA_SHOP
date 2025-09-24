@@ -3,8 +3,8 @@ import { useGetProfileQuery } from "../../features/api/apiSlice"
 import { Phone,Mail } from "lucide-react";
 const Personalinfo = () => {
   const{data:profile}=useGetProfileQuery();
-  return (
-    <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5 min-[1440px]:pt-63 min-[1440px]:pb-43">
+  return ( 
+    <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5 min-[1440px]:pt-52 min-[1440px]:pb-43 xl:min-h-[800px]">
       <Profilecard/>
       <div className="w-full bg-white rounded-2xl flex flex-col justify-center items-center gap-3 pb-25 min-[1440px]:pb-6 min-[1440px]:pt-6 min-[1440px]:w-[1107.2px] mt-3">
         <div className="flex max-[1440px]:hidden items-center gap-2.5 pt-5">

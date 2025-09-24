@@ -29,7 +29,7 @@ const Search = () => {
       }
         },[enabled,products,sales])
   return (
-            <div className=" pt-19  w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 ">
+            <div className=" pt-19  w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px] ">
            <div className="bg-white rounded-lg flex justify-center md:justify-start md:px-3 items-center gap-1.5 w-full py-4">
             <Link to={"/"} className="text-sm text-gray-500 hover:underline" >{t("navbar.home")}</Link>
             {i18n.language==="ar"?<ChevronLeft  className="text-gray-400" size={14}/>:<ChevronRight className="text-gray-400" size={14}/>}

@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 const Myorders = () => {
   const{data:orders}=useGetUserOrdersQuery();
   const {i18n,t}=useTranslation();
-  return (
-  <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5">
+  return ( 
+  <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5 xl:min-h-[800px]">
       <Profilecard/>
       <div className="bg-white py-7 mt-3 rounded-2xl">
-      <div className=" w-[80%] h-[520px]  overflow-x-auto overflow-y-auto mx-auto ">
+      <div className=" w-[80%] h-[520px]  overflow-x-auto overflow-y-auto mx-auto xl:w-[1107.2px] ">
       <table className=" border-collapse border-gray-200 text-sm text-right">
         <thead >
           <tr className="border-b border-gray-200">

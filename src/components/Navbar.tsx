@@ -51,12 +51,15 @@ const Navbar = () => {
     };
 
 
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+      useEffect(()=>{
+      i18n.changeLanguage(localStorage.getItem("Lng")||"ar");
+    },[])
     useEffect(() => {
     const handleClickOutside2 = (event: MouseEvent) => {
       if (accountRef.current && !accountRef.current.contains(event.target as Node)) { 
@@ -94,7 +97,7 @@ const Navbar = () => {
     }
   }
   return (
-      <nav className="fixed top-0 w-full bg-white z-50 flex justify-evenly items-center p-3 vs:justify-center vs:gap-7 lg:gap-3  ">
+      <nav className="fixed top-0 w-full bg-white z-200 flex justify-evenly items-center p-3 vs:justify-center vs:gap-7 lg:gap-3  ">
         <div className="relative z-20 text-left  lg:hidden" ref={menuRef} >
           <button onClick={toggleMenu}  className="hover:bg-[#02241033] w-11 h-11  rounded-lg grid place-content-center cursor-pointer active:scale-95 transition-transform shadow-2xl bg-gray-100">
               <Menu color="gray" size={20}/>
@@ -237,7 +240,7 @@ const Navbar = () => {
           </div>
         <Link to={`/wishlist`} className="relative flex flex-col gap-1 group max-lg:hidden items-center lg:order-7">
           <Heart className={ `  ${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`} size={18}/>
-          {wishlist?.data?.wishlist_items&&<p className=" grid place-content-center absolute bottom-9 right-2.5 w-4 h-4 text-xs rounded-full bg-purple-700 text-white">{wishlist?.data?.wishlist_items?.length}</p>}
+          {wishlist?.data?.wishlist_items&&token&&<p className={` grid place-content-center absolute bottom-9 ${i18n.language==="ar"?"left-8 ":"right-9"} w-4 h-4 text-xs rounded-full bg-purple-700 text-white`}>{wishlist?.data?.wishlist_items?.length}</p>}
           <p className={`${pathname==="/wishlist"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500`}>{t("navbar.favorites")}</p>
         
         </Link>
@@ -247,7 +250,9 @@ const Navbar = () => {
              <p className={`${pathname==="/cart"?"text-purple-500 ": "text-gray-500"} group-focus:text-purple-500 group-hover:text-purple-500 max-lg:hidden `}>{t("navbar.cart")}</p>
         </Link>
         <button className="lg:order-8 flex order-last flex-col gap-1  items-center gap-.5 cursor-pointer text-gray-500 hover:text-purple-500 group" onClick={()=>{
-            i18n.changeLanguage(i18n.language === 'ar' ? 'de' : 'ar'); }}>
+            i18n.changeLanguage(i18n.language === 'ar' ? 'de' : 'ar');
+             localStorage.setItem("Lng",i18n.language);
+            }}>
              <Globe size={17} className=" text-gray-500 group-hover:text-purple-500  "/>
              <p className="text-sm text-gray-500 group-hover:text-purple-500  ">
               {t("navbar.language")}

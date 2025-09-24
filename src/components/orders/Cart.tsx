@@ -98,7 +98,7 @@ const Cart = () => {
           
            
   return (
-   <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 ">
+   <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px] ">
     <div className="w-full bg-white lg:grid lg:place-content-center p-4  rounded-lg">
       <Stepper />
     </div>
@@ -250,7 +250,7 @@ const Cart = () => {
         </form>
         <div className="flex flex-col gap-5 justify-center sm:gap-6.5">
         <Link to={"/products"} className=" text-purple-600 transition-colors duration-300 w-full grid place-content-center p-2.5 rounded-lg border border-purple-600 hover:bg-purple-600 hover:text-white">{t("cart.continue_shopping")}</Link>
-        {cart?.data?.cart_items&&<Link to={"/confirm-order"} className="text-white w-full grid place-content-center p-2.5 rounded-lg bg-purple-600 ">{t("cart.place_order")}</Link>}
+        {cart?.data?.cart_items&&<Link to={"/confirm-order"} state={{from:"cart"}} className="text-white w-full grid place-content-center p-2.5 rounded-lg bg-purple-600 ">{t("cart.place_order")}</Link>}
         </div>
 
       </div>

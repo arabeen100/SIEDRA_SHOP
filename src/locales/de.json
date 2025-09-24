@@ -148,7 +148,10 @@
                   "product": "Produkt",
                     "enter_valid_coupon": "Geben Sie einen gültigen Gutschein ein!",
                      "coupon_applied": "Der Gutschein wurde angewendet!",
-                      "out_of_stock": "Die Menge ist ausverkauft",
-                        "removed_from_cart": "Der Artikel wurde aus dem Warenkorb entfernt!"
+                      "out_of_stock": "Die Menge ist ausverkauft !",
+                        "removed_from_cart": "Der Artikel wurde aus dem Warenkorb entfernt!",
+                          "thank_you_for_order": "Danke für Ihre Bestellung!",
+                            "payment_success": "Die Zahlung wurde erfolgreich abgeschlossen. Ihre Bestellung wird in Kürze bearbeitet.",
+                              "back_to_home": "Zur Startseite zurückkehren"
 
 }

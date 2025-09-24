@@ -149,8 +149,12 @@
                       "product": "المنتج",
                       "coupon_applied": "تم تطبيق الكوبون!",
                        "enter_valid_coupon": "أدخل كوبون صالح!",
-                        "out_of_stock": "لقد نفذت الكمية",
-                         "removed_from_cart": "تمت إزالة العنصر من السلة!"
+                        "out_of_stock": "لقد نفذت الكمية !" ,
+                         "removed_from_cart": "تمت إزالة العنصر من السلة!",
+                         "back_to_home": "العودة للصفحة الرئيسية",
+                         "payment_success": "تم إتمام عملية الدفع بنجاح. سيتم تجهيز طلبك قريباً.",
+                           "thank_you_for_order": "شكراً لطلبك!"
+
                         
                       
       

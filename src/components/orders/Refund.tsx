@@ -30,7 +30,7 @@ const Refund = () => {
       }
   const {t}=useTranslation();
   return (
-    <div className="pt-33" >
+    <div className="pt-33 xl:min-h-[800px]" >
       <div className=" w-[95%] md:w-[500px] flex-col flex items-center rounded-xl py-13 px-3 mx-auto h-fit bg-white">
         <img src=" 	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="mx-auto w-[100px] h-[82.359px] " loading="lazy"/>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-[70%] mt-3 px-3 ">

@@ -520,7 +520,7 @@ export const apiSlice = createApi({
             getShippingPrice:builder.query<shippingPrice,void>({
             query:()=>'/orders/shipping'
         }),
-            confirmPayment:builder.mutation<confirmPayment,confirmPaymentData>({
+            confirmPayment:builder.mutation<ApiResponse<confirmPayment>,confirmPaymentData>({
                 query:(paymentData)=>({
                 url:'/orders/confirmPayment',
                 method:"PUT",

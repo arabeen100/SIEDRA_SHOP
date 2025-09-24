@@ -32,7 +32,7 @@ const Login = () => {
       }
     }
   return (
-     <div className="pt-33" >
+     <div className="pt-33 xl:min-h-[800px]" >
       <div className=" w-[95%] md:w-[500px] flex-col flex items-center rounded-xl py-13 px-3 mx-auto h-fit bg-white">
         <img src=" 	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="mx-auto w-[100px] h-[82.359px] " loading="lazy"/>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-[70%] mt-3 px-3 ">
@@ -58,7 +58,7 @@ const Login = () => {
                <li className="text-red-600 text-sm">{t("forms.invalid_data")}</li>
             </ul>}
           
-             <Link to={"/forgot-pass"} className="text-sm mb-2 text-gray-700 hover:text-gray-800 cursor-pointer">{t("form.forgot_password")}</Link>
+             <Link to={"/forgot-pass"} state={{from:"login"}} className="text-sm mb-2 text-gray-700 hover:text-gray-800 cursor-pointer">{t("form.forgot_password")}</Link>
            
             <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 flex justify-center gap-2 cursor-pointer">
               <p>{t("navbar.login")}</p>

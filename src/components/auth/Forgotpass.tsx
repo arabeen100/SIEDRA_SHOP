@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { SpinnerCircular } from "spinners-react";
 import { useState } from "react";
 import { useForgotPasswoedMutation } from "../../features/api/apiSlice";
+import ProtectedStep from "../ProtectedStep";
 const Forgotpass = () => {
   const [email,setEmail]=useState<string>("")
   const {t}=useTranslation();
@@ -15,14 +16,15 @@ const Forgotpass = () => {
       try {
         const response=await forgot(formData).unwrap();
         if(response.status){
-          navigate("/reset-pass");
+          navigate("/reset-pass",{state:{from:"forgot-pass"}});
         }
       } catch (error) {
         console.log(error);
       }
     }
   return (
-     <div className="pt-33" >
+    <ProtectedStep from="login" redirectTo="/login">
+     <div className="pt-33 xl:min-h-[800px]" >
       <div className=" w-[95%] md:w-[500px] flex-col flex items-center rounded-xl py-13 px-3 mx-auto h-fit bg-white">
         <img src=" 	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="mx-auto w-[100px] h-[82.359px] " loading="lazy"/>
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-[70%] mt-3 px-3 ">
@@ -44,7 +46,8 @@ const Forgotpass = () => {
            <Link to={"/login"} className="mt-4 text-gray-700 text-sm text-center hover:underline "> {t("navbar.login")}</Link>
         </form>
       </div>
-     </div>    
+     </div>
+     </ProtectedStep>    
   )
 }
 

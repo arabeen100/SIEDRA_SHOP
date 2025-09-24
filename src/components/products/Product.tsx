@@ -86,13 +86,14 @@ const Product = () => {
                await triggerCart({do:"view"});
               }
            } catch (error) {
+               toast.error(t("out_of_stock"))
                console.log(error)
                
            }
          
    }
   return (
-    <div className=" pt-29 md:pt-23 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 ">
+    <div className=" pt-29 md:pt-23 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px] ">
       <div className="w-full bg-white rounded-lg p-4">
         <p className=" font-semibold">{i18n.language==="de"?product?.data?.product?.name_du:product?.data?.product?.name_ar}</p>
       </div>

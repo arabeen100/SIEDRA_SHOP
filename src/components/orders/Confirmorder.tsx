@@ -5,16 +5,21 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/reduxTyped";
 import { SpinnerCircular } from "spinners-react";
 import { useNavigate } from "react-router-dom";
+import ProtectedStep from "../ProtectedStep";
 const Confirmorder = () => {
   const navigate=useNavigate();
-  const[checkout,{isLoading}]=useCheckOutMutation();
+  const[checkout,{isLoading,data:checkoutData}]=useCheckOutMutation();
   const{data:profile}=useGetProfileQuery();
   const[name,setName]=useState<string>("");
   const[email,setEmail]=useState<string>("");
   const[phone,setPhone]=useState<string>("");
   const[address,setAddress]=useState<string>("");
   const[note,setNote]=useState<string>("");
-
+  useEffect(()=>{
+    if(checkoutData){
+      localStorage.setItem("orderId",checkoutData?.data?.payment_info?.order_id);
+    }
+  },[checkoutData])
   useEffect(()=>{
     if(profile){
       setName(profile?.data?.user?.name);
@@ -55,7 +60,7 @@ const Confirmorder = () => {
       try {
        const response= await checkout(formData).unwrap();
         if(response.status){
-          navigate("/checkout");
+          navigate("/checkout",{state:{from:"confirm"}});
         }
       } catch (error) {
         console.log(error);
@@ -63,7 +68,8 @@ const Confirmorder = () => {
       }
     }
   return (
-     <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 ">
+    <ProtectedStep from="cart" redirectTo="/cart">
+     <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3  xl:min-h-[800px]">
     <div className="w-full bg-white  p-2 lg:grid lg:place-content-center  rounded-lg">
       <Stepper />
     </div>
@@ -164,6 +170,7 @@ const Confirmorder = () => {
 
 
     </div>
+    </ProtectedStep>
   )
 }
 

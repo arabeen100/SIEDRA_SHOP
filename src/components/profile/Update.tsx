@@ -58,12 +58,12 @@ const navigate=useNavigate();
         console.log(error);
         
       }
-    }
+    } 
   return (
-      <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5">
+      <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5 xl:min-h-[800px]">
       <Profilecard/>
       
-      <div className="bg-white rounded-2xl   px-12 pt-7 pb-7 mt-3 md:flex md:items-center md:justify-around min-[1440px]:w-[1107px]">
+      <div className="bg-white rounded-2xl   px-12 pt-7 pb-7 mt-3 md:flex md:items-center md:justify-around min-[1440px]:w-[1107.2px]">
         <div className="flex flex-col justify-center md:w-[60%] min-[1440px]:w-[40%] ">
         <p className="text-xl px-3 text-purple-600 mb-2">{t("update_profile")}</p>
         <form onSubmit={handleSubmit} className="flex flex-col w-full mt-3 px-3 ">
