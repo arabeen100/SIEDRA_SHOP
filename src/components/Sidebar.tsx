@@ -85,11 +85,11 @@ const Sidebar = ({products,sales,err}:any) => {
      {expanded && (
        <div
       onClick={() => dispatch(toggleExpanded())}
-      className="fixed inset-0 bg-black/50  z-55"
+      className="fixed inset-0 bg-black/50  z-210"
         />
     )}
     
-    <aside className={ `flex flex-col items-center h-full  bg-white  transition-all md:rounded-lg overflow-y-auto duration-300 md:static fixed ${i18n.language==="ar"?" right-0":"left-0"} top-0 z-60 w-[300px] ${expanded ? "  translate-x-0" : `${i18n.language==="de"? "md:translate-x-0 -translate-x-full":"translate-x-full md:translate-x-0"}`}`}>
+    <aside className={ `flex flex-col items-center h-full  bg-white  transition-all md:rounded-lg overflow-y-auto duration-300 md:static fixed ${i18n.language==="ar"?" right-0":"left-0"} top-0 z-220 w-[300px] ${expanded ? "  translate-x-0" : `${i18n.language==="de"? "md:translate-x-0 -translate-x-full":"translate-x-full md:translate-x-0"}`}`}>
       <div className="flex flex-col items-center w-[95%]">
         <X onClick={()=>dispatch(toggleExpanded())} size={22} className={`md:hidden text-black relative cursor-pointer top-6 ${i18n.language==="ar"?"right-[120px]":"left-[120px]"}`}/>
          <p className="p-5 self-start text-xs md:text-[16px] font-bold text-gray-600">{t("shop.categories")}</p>
