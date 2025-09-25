@@ -51,10 +51,9 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
           onApprove={async (_, actions) => {
             if (!actions.order) return;
             await actions.order.capture();
-            const captureResult = await actions.order.capture();
-            handleConfirmPayment(
-              captureResult?.purchase_units?.[0]?.payments?.captures?.[0]?.id?.toString() || ""
-            );
+             const details = await actions.order.capture();
+            const paymentId =details.id;
+            handleConfirmPayment(paymentId||"");
           }}
           onError={(err) => {
             if (onError) {

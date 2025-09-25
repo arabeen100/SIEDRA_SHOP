@@ -523,7 +523,7 @@ export const apiSlice = createApi({
             confirmPayment:builder.mutation<ApiResponse<confirmPayment>,confirmPaymentData>({
                 query:(paymentData)=>({
                 url:'/orders/confirmPayment',
-                method:"PUT",
+                method:"PatCH",
                 body:paymentData,
             })
 
@@ -584,7 +584,7 @@ export const apiSlice = createApi({
             rating:builder.mutation<ApiResponse<ProductRating>,GetRatingParams>({
                 query:({productName,rating})=>({
                     url:`/products/rate/${productName}`,
-                    method:'PUT',
+                    method:'PATCH',
                     params:{rating},
                 }),
         }),

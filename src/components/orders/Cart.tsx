@@ -151,13 +151,13 @@ const Cart = () => {
                
                 <button onClick={()=>{handleRemoveFromCart(item)
                 }}
-                  className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3 sm:px-3 sm:py-2  hover:bg-purple-600 hover:text-white"
+                  className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-3 py-2 md:px-4 md:py-3 sm:px-3 sm:py-2  hover:bg-purple-600 hover:text-white max-sm:focus:bg-purple-600   max-sm:focus:text-white transition-colors duration-300"
                 >
                   -
                 </button>
                  <span>{item.quantity}</span>
                  <button onClick={()=>handleAddToCart(item)}
-                   className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3 sm:px-3 sm:py-2 hover:bg-purple-600 hover:text-white"
+                   className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-3 py-2 md:px-4 md:py-3  hover:bg-purple-600 hover:text-white max-sm:focus:bg-purple-600   max-sm:focus:text-white transition-colors duration-300"
                  >
                    +
                 </button>
@@ -169,13 +169,13 @@ const Cart = () => {
 
                
                 <button onClick={()=>handleRemoveFromCart(item)}
-                  className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3 sm:px-3 sm:py-2  hover:bg-purple-600 hover:text-white"
+                  className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3   hover:bg-purple-600 hover:text-white max-sm:focus:bg-purple-600   max-sm:focus:text-white transition-colors duration-300"
                 >
                   -
                 </button>
                  <span>{item.quantity}</span>
                  <button onClick={()=>handleAddToCart(item)}
-                   className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3 sm:px-3 sm:py-2 hover:bg-purple-600 hover:text-white"
+                   className="border border-purple-600 cursor-pointer text-purple-600 rounded-md px-2 py-1 md:px-4 md:py-3 sm:px-3 sm:py-2 hover:bg-purple-600 hover:text-white max-sm:focus:bg-purple-600   max-sm:focus:text-white transition-colors duration-300"
                  >
                    +
                 </button>
