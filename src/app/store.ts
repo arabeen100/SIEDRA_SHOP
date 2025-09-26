@@ -5,6 +5,7 @@ import sideBarReducer from "../features/sidebar/sideBar"
 import filtersReducer from "../features/filters/filtersSlice"
 import couponReducer from "../features/coupon/coupon"
 import orderReducer from '../features/order/order';
+import ProductsReducer from '../features/product/products';
 export const store = configureStore({
     reducer:{
             [apiSlice.reducerPath]: apiSlice.reducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
             filters:filtersReducer,
             coupon:couponReducer, 
             order:orderReducer,
+            products:ProductsReducer,
 
     },
      middleware: (getDefaultMiddleware) =>

@@ -10,10 +10,15 @@ import"swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Productcard from "../Productcard";
-import { useLazyGetWishListQuery,useGetWishListQuery,useLazyGetCartQuery } from "../../features/api/apiSlice";
-import { useAppSelector } from "../../hooks/reduxTyped";
+import { useLazyGetWishListQuery,useGetWishListQuery,useLazyGetCartQuery ,useGetProductsQuery} from "../../features/api/apiSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxTyped";
 import { toast } from "react-toastify";
+import{ setProducts,setToLocalStorage} from "../../features/product/products"
+import { useRef } from "react";
 const Product = () => {
+  const{data:allProducts}=useGetProductsQuery({limit:13});
+  const {products}=useAppSelector((state)=>state.products);
+  const dispatch=useAppDispatch();
   const[count,setCount]=useState<number>(1);
   const[isFavorite,setIsFavorite]=useState<any>(false);
   const[triggerCart]=useLazyGetCartQuery();
@@ -28,6 +33,7 @@ const Product = () => {
   const[selectedColor,setSelectedColor]=useState<any>("");
    const[selectedSize,setSelectedSize]=useState<any>("");
     const[selectedDimension,setSelectedDimension]=useState<any>("");
+     const prevCountsRef = useRef<any>(null);
    useEffect(() => {
   if (product) {
     setSelectedColor(product?.data?.product?.colors?.[0]);
@@ -36,8 +42,48 @@ const Product = () => {
     setCount(1);
   }
 }, [product]);
+useEffect(() => {
+  if (!allProducts || !allProducts.data || !Array.isArray(allProducts.data.products)) {
+    return;
+  }
+  const newCountsArr = allProducts.data.products.map((p: any) => ({
+    id: p.id,
+    count: Number(p.count ?? 0),
+  }));
+  const newMap = new Map<string|number, number>(newCountsArr.map(p => [p.id, p.count]));
+  const isProductsEmpty = Array.isArray(products) && products.length === 0;
+  let isCountsChanged = false;
+  const prevMap = prevCountsRef.current;
+
+  if (!prevMap) {
+    isCountsChanged = true;
+  } else {
+    if (prevMap.size !== newMap.size) {
+      isCountsChanged = true;
+    } else {
+      for (const [id, count] of newMap.entries()) {
+        const prevCount = prevMap.get(id);
+        if (prevCount !== count) {
+          isCountsChanged = true;
+          break;
+        }
+      }
+    }
+  }
+  prevCountsRef.current = newMap;
+  if (isProductsEmpty || isCountsChanged) {
+    dispatch(setProducts(newCountsArr));
+    dispatch(setToLocalStorage());
+  }
+}, [allProducts]);
 
 
+
+
+
+useEffect(()=>{
+  dispatch(setToLocalStorage());
+},[products])
     useEffect(()=>{
        
          setIsFavorite(isInWishlist);
@@ -77,13 +123,17 @@ const Product = () => {
         toast.error(t("please_login_first"))
       }
    }
-   const handleAddToCart=async(productt:any)=>{
+    const handleAddToCart=async(productt:any,id:any)=>{
+      
       if(token){
            try {
               const response= await triggerCart({do:"add",product:{...productt,quantity:count,selectedColor:selectedColor,selectedSize:selectedSize,selectedDimension:selectedDimension}}).unwrap();
               if(response.status){
                toast.success(t("added_to_cart"));
                await triggerCart({do:"view"});
+                  const updatedProducts:any=products?.map((p)=>p.id===id?{id:p.id,count:Number(p.count)-count}:p);
+                  dispatch(setProducts(updatedProducts));
+                  dispatch(setToLocalStorage());
               }
            } catch (error) {
                toast.error(t("out_of_stock"))
@@ -95,6 +145,8 @@ const Product = () => {
           }
          
    }
+
+
   return (
     <div className=" pt-29 md:pt-23 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px] ">
       <div className="w-full bg-white rounded-lg p-4">
@@ -173,15 +225,15 @@ const Product = () => {
             }} className="px-3.5 py-2 text-xl grid place-content-center text-purple-600 border border-purple-600 hover:text-white hover:bg-purple-600 rounded-lg cursor-pointer">-</div>
             <p>{count}</p>
             <div onClick={()=>{
-              if(count<Number(product?.data?.product?.count)){
+              if(count<Number(products.find(p=>p.id===product?.data?.product?.id)?.count)){
                   setCount(count+1)
               }else{
-                toast.error(`${t("only_available")} ${product?.data?.product?.count} ${t("piece_in_stock")}`)
+                toast.error(`${t("only_available")} ${products.find(p=>p.id===product?.data?.product?.id)?.count} ${t("piece_in_stock")}`)
               }
             }}  className="px-3.5 py-2 text-xl grid place-content-center text-purple-600 border border-purple-600 hover:text-white hover:bg-purple-600 rounded-lg cursor-pointer">+</div>
           </div>
           <button onClick={()=>{
-            handleAddToCart(product?.data?.product)
+            handleAddToCart(product?.data?.product,product?.data?.product?.id);
           }} className="cursor-pointer relative flex justify-center items-center w-full sm:w-2/3 p-2 rounded-lg text-white bg-purple-600">
             <p className="text-center">{t("product.add_to_cart")}</p>
             <ShoppingBag className=" absolute left-3" size={21}/>

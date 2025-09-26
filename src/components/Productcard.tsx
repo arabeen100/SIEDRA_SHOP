@@ -18,11 +18,6 @@ const Productcard:React.FC<any> = ({product}) => {
   return text;
 };
 const {data:wishlist}=useGetWishListQuery({do:'view'});
-useEffect(()=>{
-    if(wishlist){
-        console.log(wishlist)
-    }
-},[wishlist])
   const isInWishlist = wishlist?.data?.wishlist_items?.some((wishlistItem) => wishlistItem.id === product.id);
 
   useEffect(()=>{

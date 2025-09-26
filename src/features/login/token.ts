@@ -22,6 +22,5 @@ const tokenSlice = createSlice({
   },
 });
 
-// 3️⃣ نصدّر الـ reducer والـ actions
 export default tokenSlice.reducer;
 export const { setToken, setItem } = tokenSlice.actions;

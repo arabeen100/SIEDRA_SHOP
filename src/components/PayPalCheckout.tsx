@@ -1,6 +1,8 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom"
-import { useConfirmPaymentMutation } from "../features/api/apiSlice";
+import { useConfirmPaymentMutation ,useGetCartQuery,useLazyGetCartQuery} from "../features/api/apiSlice";
+import{ useAppDispatch} from "../hooks/reduxTyped";
+import { setProducts, setToLocalStorage } from "../features/product/products";
 interface PayPalCheckoutProps {
   clientId: string;
   amount: string; 
@@ -16,6 +18,9 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   description = "Purchase",
   onError,
 }) => {
+  const dispatch=useAppDispatch();
+  const [triggerCart]=useLazyGetCartQuery();
+  const {data:cartData}=useGetCartQuery({do:"view"});
   const[confirmPayment]=useConfirmPaymentMutation();
      const navigate = useNavigate();
     const handleConfirmPayment=async(paymentId:string)=>{
@@ -54,6 +59,12 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
              const details = await actions.order.capture();
             const paymentId =details.id;
             handleConfirmPayment(paymentId||"");
+            cartData?.data?.cart_items?.forEach(async(item:any)=>{
+              await triggerCart({do:"remove",id:item.cart_id});
+              await triggerCart({do:"view"});
+            })
+            dispatch(setProducts([]));
+            dispatch(setToLocalStorage());
           }}
           onError={(err) => {
             if (onError) {

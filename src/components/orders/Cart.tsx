@@ -7,13 +7,15 @@ import { toast } from "react-toastify";
 import { Link,useLocation } from "react-router-dom";
 import { useAppDispatch,useAppSelector } from "../../hooks/reduxTyped";
 import { setApply, setCoupon } from "../../features/coupon/coupon";
+import { setProducts,setToLocalStorage } from "../../features/product/products";
 
 const Cart = () => {
+  const{products}=useAppSelector((state)=>state.products);
   const {pathname}=useLocation();
   const[flag,setFlag]=useState<boolean>(false);
   const{coupon,apply}=useAppSelector((state)=>state.coupon);
-  const dsipatch=useAppDispatch();
-  const{data:couponData,error,isFetching}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!apply});
+  const dispatch=useAppDispatch();
+  const{data:couponData,error,isSuccess,isFetching}=useGetCouponQuery({coupon:coupon},{skip:!coupon||!apply});
   const[subtotal,setSubTotal]=useState<number>(0);
   const[shipping,setShipping]=useState<number>(0);
   const[triggerCart]=useLazyGetCartQuery();
@@ -21,17 +23,12 @@ const Cart = () => {
   const{i18n,t}=useTranslation();
   useEffect(()=>{
      if(error){
-      dsipatch(setApply(false));
+      dispatch(setApply(false));
       toast.error(t("enter_valid_coupon"))
      }else if(apply&&couponData&&!error&&!isFetching&&flag){
       toast.success(t("coupon_applied"))
      }
   },[error,couponData,apply,isFetching])
-  useEffect(()=>{
-    if(cart){
-      console.log(cart)
-    }
-  },[cart])
   useEffect(()=>{
     setFlag(true)
     
@@ -52,11 +49,14 @@ const Cart = () => {
     }
   },[cart])
     const handleAddToCart=async(cartItem:any)=>{
-         if(cartItem.quantity<cartItem.count){
+         if(Number(products.find(p=>p.id===cartItem?.id)?.count)>=1){
              try {
                 const response= await triggerCart({do:"update",product:{...cartItem,quantity:cartItem.quantity+1},id:cartItem.cart_id}).unwrap();
                 if(response.status){
                  await triggerCart({do:"view"});
+                      const updatedProducts:any=products?.map((p)=>p.id===cartItem?.id?{id:p.id,count:Number(p.count)-1}:p);
+                      dispatch(setProducts(updatedProducts));
+                      dispatch(setToLocalStorage());
                 }
              } catch (error) {
                  console.log(error)
@@ -66,12 +66,15 @@ const Cart = () => {
                 toast.error(`${t("only_available")} ${cartItem.count} ${t("piece_in_stock")}`)
             }
           }
-          const handleDeleteCart=async(cartId:number)=>{
+          const handleDeleteCart=async(cartItem:any)=>{
         
              try {
-                const response= await triggerCart({do:"remove",id:cartId}).unwrap();
+                const response= await triggerCart({do:"remove",id:cartItem.cart_id}).unwrap();
                 if(response.status){
                  await triggerCart({do:"view"});
+                    const updatedProducts:any=products?.map((p)=>p.id===cartItem?.id?{id:p.id,count:Number(p.count)+cartItem.quantity}:p);
+                      dispatch(setProducts(updatedProducts));
+                      dispatch(setToLocalStorage());
                  toast.error(t("removed_from_cart"))
                 }
              } catch (error) {
@@ -85,13 +88,16 @@ const Cart = () => {
                 const response= await triggerCart({do:"update",product:{...cartItem,quantity:cartItem.quantity-1},id:cartItem.cart_id}).unwrap();
                 if(response.status){
                  await triggerCart({do:"view"});
+                      const updatedProducts:any=products?.map((p)=>p.id===cartItem?.id?{id:p.id,count:Number(p.count)+1}:p);
+                      dispatch(setProducts(updatedProducts));
+                      dispatch(setToLocalStorage());
                 }
              } catch (error) {
                  console.log(error)
                  
              }
             }else{
-              handleDeleteCart(cartItem.cart_id)
+              handleDeleteCart(cartItem)
             }
           }
 
@@ -195,7 +201,7 @@ const Cart = () => {
 
           {/* زر الحذف */}
             <td className={`${i18n.language==="ar"?"text-left":"text-right"} w-2/3 md:w-1/4 lg:w-1/5`}>
-             <button onClick={()=>{handleDeleteCart(item.cart_id)}} className="cursor-pointer text-red-500 hover:text-red-700">
+             <button onClick={()=>{handleDeleteCart(item)}} className="cursor-pointer text-red-500 hover:text-red-700">
               <Trash size={20} />
             </button>
             </td>
@@ -220,7 +226,7 @@ const Cart = () => {
         <p className="font-semibold">{t("cart.total")}:</p>
         <div className="flex flex-col gap-1.5 items-end">
         <p className={`${apply&&couponData&&!error?"line-through text-gray-600":"text-black"}`}>€{(subtotal+shipping).toFixed(2)}</p>
-        {apply&&couponData&&!error&&<p className="font-semibold text-purple-600">€{(((100-Number(couponData?.data?.value))/100)*(subtotal+shipping)).toFixed(2)}</p>}
+        {apply&&couponData&&!error&&<p className="font-semibold text-purple-600">€{((((100-Number(couponData?.data?.value))/100)*(subtotal))+shipping).toFixed(2)}</p>}
         </div>
       </div>
 
@@ -228,11 +234,11 @@ const Cart = () => {
       <div className="bg-white rounded-lg  w-full p-6  flex flex-col gap-5 sm:flex-row sm:justify-between">
         <form onSubmit={(e)=>{
           e.preventDefault();
-          dsipatch(setApply(true));
+          dispatch(setApply(true));
           
         }} className="mx-auto sm:mx-0 flex flex-col gap-3.5 sm:gap-2 w-[80%] sm:w-[50%]">
-          {(!apply||error||!couponData)&&<label htmlFor="coupon">{t("cart.coupon_code")}</label>}
-          {(!apply||error||!couponData)&&<input
+          {(!apply||error||!isSuccess)&&<label htmlFor="coupon">{t("cart.coupon_code")}</label>}
+          {(!apply||error||!isSuccess)&&<input
           className="w-full rounded-lg focus:border-2 focus:border-black p-2 text-sm outline-0 border border-gray-300 text-gray-800"
           required
           placeholder={t("cart.enter_coupon")}
@@ -240,11 +246,11 @@ const Cart = () => {
           name="coupon"
           type="text"
           value={coupon}
-          onChange={(e)=>dsipatch(setCoupon(e.target.value))}
+          onChange={(e)=>dispatch(setCoupon(e.target.value))}
           />}
-          {(!apply||error||!couponData)&&<button type="submit"  className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-purple-600 text-purple-600 w-full hover:bg-purple-600 hover:text-white">{t("cart.apply")}</button>}
-          {apply&&couponData&&!error&&<button  onClick={()=>{dsipatch(setApply(false));
-           dsipatch(setCoupon(""));
+          {(!apply||error||!isSuccess)&&<button type="submit"  className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-purple-600 text-purple-600 w-full hover:bg-purple-600 hover:text-white">{t("cart.apply")}</button>}
+          {apply&&isSuccess&&!error&&<button  onClick={()=>{dispatch(setApply(false));
+           dispatch(setCoupon(""));
           }} className="cursor-pointer rounded-lg p-2.5 border transition-colors duration-300 border-red-600 text-red-600 w-full hover:bg-red-600 hover:text-white">Remove Coupon</button>}
 
         </form>

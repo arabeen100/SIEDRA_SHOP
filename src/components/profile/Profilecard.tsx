@@ -2,16 +2,10 @@ import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useGetProfileQuery } from "../../features/api/apiSlice";
-import { useEffect } from "react";
 const Profilecard = () => {
     const{data:profile}=useGetProfileQuery();
     const{pathname}=useLocation();
     const{t}=useTranslation();
-    useEffect(()=>{
-        if(profile){
-            console.log(profile)
-        }
-    },[profile])
   return (
     <div className="w-full rounded-2xl bg-white flex flex-col items-center   xl:w-[296.8px] xl:gap-13 gap-7">
         <div className="flex items-center gap-2.5 pt-10">

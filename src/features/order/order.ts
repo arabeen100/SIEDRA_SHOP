@@ -1,11 +1,11 @@
 import { createSlice,  } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface LoginState {
+interface OrderState {
   orderId: string;
 }
 
-const initialState: LoginState = {
+const initialState: OrderState = {
   orderId: "",
 };
 
@@ -20,6 +20,5 @@ const orderSlice = createSlice({
   },
 });
 
-// 3️⃣ نصدّر الـ reducer والـ actions
 export default orderSlice.reducer;
 export const {setOrderId} = orderSlice.actions;

@@ -26,6 +26,5 @@ const couponSlice = createSlice({
   },
 });
 
-// 3️⃣ نصدّر الـ reducer والـ actions
 export default couponSlice.reducer;
 export const { setApply, setCoupon } = couponSlice.actions;

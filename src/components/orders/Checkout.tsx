@@ -1,14 +1,9 @@
 import Stepper from "../Stepper"
 import PayPalCheckout from "../PayPalCheckout"
 import { useGetPaymentInfoQuery } from "../../features/api/apiSlice"
-import { useEffect } from "react";
 import ProtectedStep from "../ProtectedStep";
 const Checkout = () => {
 const{data:paymentInfo}=useGetPaymentInfoQuery(localStorage.getItem("orderId")||"",{skip:!localStorage.getItem("orderId")});
-useEffect(()=>{
-  if(paymentInfo){
-    console.log(paymentInfo);}
-},[paymentInfo])
   return (
     <ProtectedStep from="confirm" redirectTo="/cart">
     <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px]">

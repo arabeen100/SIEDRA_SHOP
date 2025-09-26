@@ -231,7 +231,6 @@ interface GetRatingParams {
   productName: string;
   rating: number;
 }
-// Cart item type
 interface Category {
   id: number|string;
   name_ar: string;
@@ -263,16 +262,16 @@ interface CartItem {
   shippingPrice: number;
   shippingTime: number;
   availability: boolean;
-  sale: number; // or Sale if مش دايماً 0
+  sale: number; 
   visits: number;
   sales: number;
   rating: number;
   ratingCount: number;
   add_date: string;
-  dimensions: any[]; // تقدر تعمل لها type منفصل لو عندك
+  dimensions: any[]; 
   colors: string[];
-  sizes: any[]; // برضه تقدر تعمل type منفصل
-  images: any[]; // ممكن تعملها interface Image[]
+  sizes: any[]; 
+  images: any[]; 
   category: Category;
   subcategory: Subcategory;
   quantity: number;
@@ -291,23 +290,19 @@ interface GetCartParams {
   product?: Product;
   id?: number|string;
 }
-// User type
  interface User1 {
   id: number;
   name: string;
   username: string;
   email: string;
   phone: string;
-  lastLogin: string; // mapped from "Last-Log-In"
-  addingDate: string; // mapped from "Adding-Date"
-}
-
-// Response type
+  lastLogin: string; 
+  addingDate: string;
+ }
  interface UserData {
     user:User1;
     message?: string;
 }
-// Single order item
 interface ProductInfo {
   name_ar: string;
   name_du: string;
@@ -339,7 +334,7 @@ interface Order {
   Status: string;
   Order_ID: string;
   CouponValue: number;
-  Adding_Date: string; // تقدر تخليها Date لو هتعمل parsing
+  Adding_Date: string; 
   Products: OrderProduct[];
 }
 interface OrdersData {
@@ -350,14 +345,12 @@ interface GetWishListParams {
   do: 'view' | 'add' | 'remove';
     product?: string;
 }
-// Image of a product
 interface ProductImage {
   ID: number;
   "Image-Name": string;
   link: string;
 }
 
-// Category
 interface Category {
   id: number|string;
   name_ar: string;
@@ -368,7 +361,6 @@ interface Category {
   total_category_products: string|number;
 }
 
-// Subcategory
 interface Subcategory {
   id: string|number;
   name_ar: string;
@@ -377,7 +369,6 @@ interface Subcategory {
   category: Category;
 }
 
-// Single wishlist item
 interface WishlistItem {
   id: number;
   name_ar: string;
@@ -391,13 +382,13 @@ interface WishlistItem {
   shippingPrice: number;
   shippingTime: number;
   availability: boolean;
-  sale: boolean | number; // can be false or an object/number in some endpoints
+  sale: boolean | number; 
   visits: number;
   sales: number;
   rating: number;
   ratingCount: number;
   add_date: string;
-  dimensions: string[]; // some endpoints use objects, adjust if needed
+  dimensions: string[];
   colors: string[];
   sizes: string[];
   images: ProductImage[];
@@ -405,12 +396,10 @@ interface WishlistItem {
   subcategory: Subcategory;
 }
 
-// Response for getting wishlist items
 interface WishlistResponse {
   wishlist_items: WishlistItem[];
 }
 
-// Response for adding/removing a product from wishlist
 interface WishlistActionResponse {
   message: string;
 }
@@ -523,7 +512,7 @@ export const apiSlice = createApi({
             confirmPayment:builder.mutation<ApiResponse<confirmPayment>,confirmPaymentData>({
                 query:(paymentData)=>({
                 url:'/orders/confirmPayment',
-                method:"PatCH",
+                method:"PATCH",
                 body:paymentData,
             })
 
@@ -796,6 +785,7 @@ export const apiSlice = createApi({
 })
 
 export const {
+  useLazyGetProductsQuery,
   useLazyGetCartQuery,
    useLazyGetWishListQuery,
     useRegisterMutation,

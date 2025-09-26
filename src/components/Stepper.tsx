@@ -18,7 +18,6 @@ const steps: Step[] = [
 
   return (
      <div className="relative flex justify-between items-start w-full lg:w-[600px] xl:w-[800px] ">
-      {/* الخط الخلفي الرمادي */}
       <div className=" absolute top-3 left-[calc(11%+14px)] right-[calc(11%+14px)] h-1.5 bg-gray-200 z-0"></div>
 
       {steps.map((step, index) => (
@@ -26,14 +25,12 @@ const steps: Step[] = [
           key={index}
           className="relative flex flex-col items-center flex-1 z-10"
         >
-          {/* الدائرة */}
           <div
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors duration-300 ${
               index <= currentStep ? "bg-purple-600 text-white" : "bg-gray-200"
             }`}
           />
 
-          {/* النص تحت الدائرة */}
           <p
             className={`mt-2 text-sm text-center ${
               index === currentStep
@@ -44,7 +41,6 @@ const steps: Step[] = [
             {step.label}
           </p>
 
-          {/* الخط الملون (بيوصل بين الدايرتين اللي خلصوا) */}
           {index < currentStep && (
             <div className={`absolute top-3 ${i18n.language==="ar"?"right-1/2":"left-1/2"}  w-full h-1.5 bg-purple-600 -z-10`}></div>
           )}

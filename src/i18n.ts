@@ -11,7 +11,7 @@ i18n
       ar: { translation: ar },
       de: { translation: de },
     },
-    lng: 'ar', // اللغة الافتراضية
+    lng: 'ar', 
     fallbackLng: 'ar',
     interpolation: {
       escapeValue: false,

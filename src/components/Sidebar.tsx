@@ -53,9 +53,6 @@ const Sidebar = ({products,sales,err}:any) => {
   useEffect(()=>{
     if(allProducts?.data?.filters&&range[0]===0&&range[1]===0){
         dispatch(setRange([allProducts?.data?.filters?.min_price,allProducts?.data?.filters?.max_price]))};
-   /*   }else if(allProducts?.data?.products?.length===0){
-      dispatch(setRange([products?.data?.filters?.min_price,products?.data?.filters?.max_price]))
-    } */
   },[allProducts,products,pathname,range])
   useEffect(()=>{
     dispatch(setRange([0,0]));

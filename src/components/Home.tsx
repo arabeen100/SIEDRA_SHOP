@@ -4,7 +4,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination ,Autoplay} from 'swiper/modules';
 import { useGetCarouselsQuery,useGetCategoriesQuery,useGetRecommendationsQuery ,useGetMostVisitedQuery} from "../features/api/apiSlice";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronRight,ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -25,25 +24,6 @@ const slides =
   categories?.data?.categories?.length && categories.data.categories.length <= 4
     ? [...categories.data.categories, ...categories.data.categories] // duplicate
     : categories?.data?.categories || [];
-
-  useEffect(()=>{
-    if(carousels){
-      console.log(carousels);
-    }
-
-  },[carousels])
-    useEffect(()=>{
-    if(categories){
-      console.log(categories);
-    }
-
-  },[categories])
-      useEffect(()=>{
-    if(recommendations){
-      console.log(recommendations);
-    }
-
-  },[recommendations])
   return (
     <div className=" pt-33 md:pt-23 ">
       <div className="relative md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto ">
