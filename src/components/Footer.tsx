@@ -30,7 +30,7 @@ const Footer = () => {
     }
   }
   return (
-    <footer className={`w-full bg-white mt-25  pt-5 ${i18n.language==="de"?"pl-14":"pr-14"}  sm:flex sm:flex-col min-[701px]:justify-around min-[701px]:flex-row pb-5 `}>
+    <footer className={`w-full  bg-white mt-25  pt-5 ${i18n.language==="de"?"pl-14":"pr-14"}  sm:flex sm:flex-col min-[701px]:justify-around min-[701px]:flex-row pb-5 `}>
       <div className="sm:flex sm:justify-between min-[701px]:justify-around min-[701px]:w-2/3 ">
        <Link to={"/"}>
             <img src="	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="w-[150px] h-[123.531px] " loading="lazy"/>

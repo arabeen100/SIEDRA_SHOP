@@ -13,7 +13,7 @@ import Productcard from "../Productcard";
 import { useLazyGetWishListQuery,useGetWishListQuery,useLazyGetCartQuery ,useGetProductsQuery} from "../../features/api/apiSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxTyped";
 import { toast } from "react-toastify";
-import{  setProducts,setToLocalStorage} from "../../features/product/products"
+import{setProducts,setToLocalStorage} from "../../features/product/products"
 import { useRef } from "react";
 const Product = () => {
   const{data:allProducts}=useGetProductsQuery({limit:13});
@@ -42,47 +42,42 @@ const Product = () => {
     setCount(1);
   }
 }, [product]);
-useEffect(() => {
-  if (!allProducts || !allProducts.data || !Array.isArray(allProducts.data.products)) {
+useEffect(()=>{
+    if (!allProducts || !allProducts.data || !Array.isArray(allProducts.data.products)) {
     return;
-  }
+  } 
 
-  const newCountsArr = allProducts.data.products.map((p: any) => ({
+   const newCountsArr = allProducts.data.products.map((p: any) => ({
     id: p.id,
     count: Number(p.count ?? 0),
   }));
-
-  const newMap = new Map<string | number, number>(allProducts?.data?.products?.map(p => [p.id,Number( p.count)]));
-
-  const isProductsEmpty = JSON.parse(localStorage.getItem("products")||"[]").length === 0|| (Array.isArray(products) && products.length === 0);
-
   let isCountsChanged = false;
-  const prevMap = prevCountsRef.current;
+const prev= JSON.parse(localStorage.getItem("prevCountsRef")||"null")
+if (prev) {
+  const normalize = (arr: any[]) =>
+    [...arr].sort((a, b) => a.id - b.id);
 
-  if (!prevMap) {
-    isCountsChanged = false;
-  } else {
-    if (prevMap.size !== newMap.size) {
-      isCountsChanged = true;
-    } else {
-      for (const [id, count] of newMap.entries()) {
-        const prevCount = prevMap.get(id);
-        if (prevCount !== count) {
-          isCountsChanged = true;
-          break;
-        }
-      }
+  const prevNormalized = JSON.stringify(normalize(prev));
+  const newNormalized = JSON.stringify(normalize(newCountsArr));
+
+  isCountsChanged = prevNormalized !== newNormalized;
+}
+
+prevCountsRef.current = newCountsArr;
+localStorage.setItem("prevCountsRef",JSON.stringify(prevCountsRef.current))
+const isProductsEmpty = JSON.parse(localStorage.getItem("products")||"[]").length === 0|| (Array.isArray(products) && products.length === 0);
+   const normalize = (arr:any) => 
+  [...arr].sort((a, b) => a.id - b.id);
+    const isDifferent=JSON.stringify(normalize(newCountsArr))!==JSON.stringify(normalize(products));
+    if(isDifferent){
+      if(isCountsChanged||isProductsEmpty){
+      dispatch(setProducts(newCountsArr));
+      dispatch(setToLocalStorage());}
+    }else if(!isDifferent||isProductsEmpty){
+      dispatch(setProducts(newCountsArr));
+      dispatch(setToLocalStorage());
     }
-  }
-
-  prevCountsRef.current = newMap;
-
-  if (isProductsEmpty || isCountsChanged) {
-    dispatch(setProducts(newCountsArr));
-    dispatch(setToLocalStorage());
-  }
-
-}, [allProducts]);
+},[allProducts])
 
 
 

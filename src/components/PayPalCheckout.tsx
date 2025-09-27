@@ -2,8 +2,8 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom"
 import { useConfirmPaymentMutation ,useGetCartQuery,useLazyGetCartQuery} from "../features/api/apiSlice";
 import{ useAppDispatch} from "../hooks/reduxTyped";
-import { setProducts, setToLocalStorage } from "../features/product/products";
-import { setApply } from "../features/coupon/coupon";
+import { clearProducts } from "../features/product/products";
+import { setApply,setCoupon } from "../features/coupon/coupon";
 interface PayPalCheckoutProps {
   clientId: string;
   amount: string; 
@@ -64,9 +64,9 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
               await triggerCart({do:"remove",id:item.cart_id});
               await triggerCart({do:"view"});
             })
-            dispatch(setProducts([]));
-            dispatch(setToLocalStorage());
+           dispatch(clearProducts());
             dispatch(setApply(false));
+            dispatch(setCoupon(""));
           }}
           onError={(err) => {
             if (onError) {

@@ -104,7 +104,7 @@ const Cart = () => {
           
            
   return (
-   <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px] ">
+   <div className=" pt-29 md:pt-20 w-[95%] md:w-[768px] lg:w-[976px] xl:w-[1440px] mx-auto flex flex-col items-center justify-center gap-3 xl:min-h-[800px]  ">
     <div className="w-full bg-white lg:grid lg:place-content-center p-4  rounded-lg">
       <Stepper />
     </div>

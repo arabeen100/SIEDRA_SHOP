@@ -21,7 +21,6 @@ function loadProductsFromLocalStorage(): Product[] {
     return [];
   }
 }
-
 const initialState: ProductsState = {
   products: loadProductsFromLocalStorage(),
 };
@@ -44,9 +43,10 @@ const productsSlice = createSlice({
       state.products = [];
       localStorage.removeItem("products"); 
     },
+
   },
 });
 
 export default productsSlice.reducer;
-export const { setProducts, setToLocalStorage, clearProducts } =
+export const { setProducts, setToLocalStorage, clearProducts} =
   productsSlice.actions;

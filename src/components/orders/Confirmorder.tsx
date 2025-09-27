@@ -110,7 +110,7 @@ const Confirmorder = () => {
         <p className="font-semibold text-purple-600">{t("cart.total")}:</p>
         <div className="flex flex-col gap-1.5 items-end">
         <p className={`${apply&&couponData&&!error?"line-through text-gray-600":"text-gray-600"}`}>€{(subtotal+shipping).toFixed(2)}</p>
-        {apply&&couponData&&!error&&<p className="font-semibold text-purple-600">€{(((100-Number(couponData?.data?.value))/100)*(subtotal+shipping)).toFixed(2)}</p>}
+        {apply&&couponData&&!error&&<p className="font-semibold text-purple-600">€{((((100-Number(couponData?.data?.value))/100)*(subtotal))+shipping).toFixed(2)}</p>}
         </div>
       </div>
 
