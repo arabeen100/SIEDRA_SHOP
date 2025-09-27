@@ -13,7 +13,7 @@ import Productcard from "../Productcard";
 import { useLazyGetWishListQuery,useGetWishListQuery,useLazyGetCartQuery ,useGetProductsQuery} from "../../features/api/apiSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxTyped";
 import { toast } from "react-toastify";
-import{ setProducts,setToLocalStorage} from "../../features/product/products"
+import{  setProducts,setToLocalStorage} from "../../features/product/products"
 import { useRef } from "react";
 const Product = () => {
   const{data:allProducts}=useGetProductsQuery({limit:13});
@@ -46,17 +46,21 @@ useEffect(() => {
   if (!allProducts || !allProducts.data || !Array.isArray(allProducts.data.products)) {
     return;
   }
+
   const newCountsArr = allProducts.data.products.map((p: any) => ({
     id: p.id,
     count: Number(p.count ?? 0),
   }));
-  const newMap = new Map<string|number, number>(newCountsArr.map(p => [p.id, p.count]));
-  const isProductsEmpty = Array.isArray(products) && products.length === 0;
+
+  const newMap = new Map<string | number, number>(allProducts?.data?.products?.map(p => [p.id,Number( p.count)]));
+
+  const isProductsEmpty = JSON.parse(localStorage.getItem("products")||"[]").length === 0|| (Array.isArray(products) && products.length === 0);
+
   let isCountsChanged = false;
   const prevMap = prevCountsRef.current;
 
   if (!prevMap) {
-    isCountsChanged = true;
+    isCountsChanged = false;
   } else {
     if (prevMap.size !== newMap.size) {
       isCountsChanged = true;
@@ -70,11 +74,14 @@ useEffect(() => {
       }
     }
   }
+
   prevCountsRef.current = newMap;
+
   if (isProductsEmpty || isCountsChanged) {
     dispatch(setProducts(newCountsArr));
     dispatch(setToLocalStorage());
   }
+
 }, [allProducts]);
 
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useConfirmPaymentMutation ,useGetCartQuery,useLazyGetCartQuery} from "../features/api/apiSlice";
 import{ useAppDispatch} from "../hooks/reduxTyped";
 import { setProducts, setToLocalStorage } from "../features/product/products";
+import { setApply } from "../features/coupon/coupon";
 interface PayPalCheckoutProps {
   clientId: string;
   amount: string; 
@@ -65,6 +66,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
             })
             dispatch(setProducts([]));
             dispatch(setToLocalStorage());
+            dispatch(setApply(false));
           }}
           onError={(err) => {
             if (onError) {
