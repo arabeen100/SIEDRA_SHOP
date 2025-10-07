@@ -2,7 +2,7 @@ import{ useState } from "react";
 import { useTranslation } from "react-i18next"
 import { Eye,EyeOff } from "lucide-react";
 import { SpinnerCircular } from "spinners-react";
-import { useLogInMutation } from "../../features/api/apiSlice";
+import { apiSlice, useLogInMutation } from "../../features/api/apiSlice";
 import{ Link,useNavigate} from "react-router-dom";
 import { useAppDispatch } from "../../hooks/reduxTyped";
 import { setToken,setItem } from "../../features/login/token";
@@ -23,9 +23,10 @@ const Login = () => {
       try {
         const response=await login(formData).unwrap();
         if(response.status){
-          navigate("/");
           dispatch(setToken(response.data.token));
           dispatch(setItem());
+          dispatch(apiSlice.util.invalidateTags(["profile","cart","wishlist"]));
+          navigate("/");
         }
       } catch (error) {
         console.log(error);

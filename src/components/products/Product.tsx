@@ -23,8 +23,8 @@ const Product = () => {
   const[isFavorite,setIsFavorite]=useState<any>(false);
   const[triggerCart]=useLazyGetCartQuery();
    const [triggerWishlist] = useLazyGetWishListQuery();
-   const {data:wishlist}=useGetWishListQuery({do:'view'});
-  const{token}=useAppSelector((state)=>state.token);
+    const{token}=useAppSelector((state)=>state.token);
+   const {data:wishlist}=useGetWishListQuery({do:'view'},{skip:!token});
   const{t,i18n}=useTranslation();
   const {name}=useParams();
   const{data:product}=useGetProductQuery({name:name?.replace(/\s+/g, "-")});
@@ -247,7 +247,7 @@ useEffect(()=>{
 
         }} className={`${isFavorite?"border-red-500":"border-purple-600"} bg-gray-200  cursor-pointer relative flex justify-center items-center w-full p-2 rounded-lg border  hover:border-gray-300 active:scale-95 transition-transform`}>
           <p>{t("product.add_to_wishlist")}</p>
-          <Heart className={`${isFavorite&& "text-red-500 fill-red-500"} absolute left-3`}  size={21}/>
+          <Heart className={`${isFavorite&&token&& "text-red-500 fill-red-500"} absolute left-3`}  size={21}/>
         </button>
         <div className="flex gap-3">
           <PackageX size={21}/>

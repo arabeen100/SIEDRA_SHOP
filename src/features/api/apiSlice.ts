@@ -412,7 +412,7 @@ interface WishlistActionResponse {
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://siedra-shop.eu/api' }),
-    tagTypes:["profile"],
+    tagTypes:["profile","cart","wishlist"],
     endpoints: (builder) => ({
              register:builder.mutation<ApiResponse<MostEndpointsData>,FormData>({
             query:(newUser)=>({
@@ -678,7 +678,8 @@ export const apiSlice = createApi({
                   }  
                 }
              } 
-            }       
+            } ,
+            providesTags: ["cart"]      
                     
        }),
 
@@ -734,40 +735,41 @@ export const apiSlice = createApi({
                                 method:'GET',
                                 params:{do:action},
                                 headers:{
-                    "Authorization":`Bearer ${token}`
-                      },
+                                  "Authorization":`Bearer ${token}`
+                            },
                     
-                    }
+                        }
                         case 'add':
                             return {
                                 url:'/profile/wishlist',
                                 method:'GET',
                                 params:{do:action,product},
-                                headers:{
-                    "Authorization":`Bearer ${token}`
-                    }
+                               headers:{
+                                 "Authorization":`Bearer ${token}`
+                                }
 
-                } 
+                     } 
                   case 'remove':
                     return {
                         url:`/profile/wishlist`,
                         method:'GET',
                         params:{do:action,product},
                              headers:{
-                    "Authorization":`Bearer ${token}`
-                    }  
-              }          
+                              "Authorization":`Bearer ${token}`
+                         }  
+                  }          
               default:
                 return {
                     url:'/profile/wislList',
                     method:'GET',
                     params:{do:action},
                          headers:{
-                    "Authorization":`Bearer ${token}`
-                  }  
-                }
+                             "Authorization":`Bearer ${token}`
+                         }  
+                    }
              } 
             },
+            providesTags: ["wishlist"],
             
                   
                     

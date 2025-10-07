@@ -17,7 +17,7 @@ const Productcard:React.FC<any> = ({product}) => {
   }
   return text;
 };
-const {data:wishlist}=useGetWishListQuery({do:'view'});
+const {data:wishlist}=useGetWishListQuery({do:'view'},{skip:!token});
   const isInWishlist = wishlist?.data?.wishlist_items?.some((wishlistItem) => wishlistItem.id === product.id);
 
   useEffect(()=>{
@@ -25,7 +25,7 @@ const {data:wishlist}=useGetWishListQuery({do:'view'});
       setIsFavorite(isInWishlist);
 
   },[isInWishlist])
- 
+
 const handleToogle=async(productName:string)=>{
    if(token){
     if(isInWishlist){
@@ -65,7 +65,7 @@ const handleToogle=async(productName:string)=>{
       <button onClick={()=>{handleToogle(product.name_du);
          setIsFavorite(!isFavorite)
       }} className="cursor-pointer absolute top-3 right-3 p-2 bg-white rounded-full shadow hover:bg-gray-100">
-        <Heart size={18} className={isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"} />
+        <Heart size={18} className={(isFavorite&&token) ? "text-red-500 fill-red-500" : "text-gray-600"} />
       </button>
       {product?.sale?.Value&&<div className="absolute top-3 left-4 text-white bg-red-600 p-1 rounded-lg text-xs">
         -{product?.sale?.Value}%
