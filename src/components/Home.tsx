@@ -3,12 +3,13 @@ import"swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination ,Autoplay} from 'swiper/modules';
-import { useGetCarouselsQuery,useGetCategoriesQuery,useGetRecommendationsQuery ,useGetMostVisitedQuery} from "../features/api/apiSlice";
+import { useGetCarouselsQuery,useGetCategoriesQuery,useGetRecommendationsQuery ,useGetMostVisitedQuery,useGetSalesQuery} from "../features/api/apiSlice";
 import { useTranslation } from "react-i18next";
 import { ChevronRight,ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Productcard from "./Productcard";
 const Home = () => {
+  const{data:sales}=useGetSalesQuery({limit:10});
   const{data:mostVisited}=useGetMostVisitedQuery({limit:10});
   const {data:recommendations}=useGetRecommendationsQuery({limit:12});
   const {t,i18n}=useTranslation();
@@ -128,6 +129,41 @@ const slides =
         <img src="https://siedra-shop.eu/public/uploads/images/categories-images/8584_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9%20%D8%BA%D9%84%D8%A7%D9%81.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " loading="lazy"/>
         <p className="text-lg font-bold text-gray-700 mt-5">{t("home.discounted_products")}</p>
       </div>
+      {sales?.data?.products&&sales?.data?.products?.length>0&&<div className="relative w-[95%] mx-auto  md:w-[768px] lg:w-[976px]  xl:w-[1440px]  mt-20">
+         <Swiper 
+           key={i18n.language}
+           dir={i18n.language==="ar"?"rtl":"ltr"}
+           modules={[Navigation,Autoplay]}
+           navigation={{
+              nextEl: ".custom4-next",
+              prevEl: ".custom4-prev",
+             }}
+             slidesPerView={2}
+             spaceBetween={7}
+           loop={true}
+          speed={1000}
+          breakpoints={{
+            768:{slidesPerView:3
+
+            },
+            1440:{slidesPerView:5}
+          }}
+          className="w-full">
+               {sales?.data?.products?.map(product=>
+                <SwiperSlide key={product.id}>
+                   <Productcard  product={product}/>
+               </SwiperSlide>  
+        )}
+
+
+         </Swiper>
+         <button className={`z-30 cursor-pointer custom4-prev absolute left-2 md:left- top-1/2 -translate-y-1/2  text-white p-1 bg-[#0000008a] rounded-full`}>
+        <ChevronLeft size={20}/>
+        </button>
+        <button className="z-30 cursor-pointer custom4-next absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-[#0000008a] text-white rounded-full">
+        <ChevronRight size={20} />
+        </button>
+      </div>}
       <div className="mt-20 md:w-[768px] lg:w-[976px] xl:w-[1440px] w-[95%] mx-auto max-h-[300px] ">
         <img src="https://siedra-shop.eu/public/uploads/images/categories-images/196_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84.jpg" className="w-full object-cover object-center rounded-2xl h-[230px] sm:h-[300px] " loading="lazy" />
         <p className="text-lg font-bold text-gray-700 mt-5">{t("home.new_products")}</p>
