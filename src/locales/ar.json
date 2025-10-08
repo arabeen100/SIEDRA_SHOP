@@ -153,7 +153,9 @@
                          "removed_from_cart": "تمت إزالة العنصر من السلة!",
                          "back_to_home": "العودة للصفحة الرئيسية",
                          "payment_success": "تم إتمام عملية الدفع بنجاح. سيتم تجهيز طلبك قريباً.",
-                           "thank_you_for_order": "شكراً لطلبك!"
+                           "thank_you_for_order": "شكراً لطلبك!",
+                             "no_orders_found": "لم يتم العثور على طلبات",
+                             "start_shopping": "ابدأ التسوق"
 
                         
                       

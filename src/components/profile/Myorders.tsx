@@ -1,14 +1,15 @@
 import Profilecard from "./Profilecard"
 import { useGetUserOrdersQuery } from "../../features/api/apiSlice"
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 const Myorders = () => {
   const{data:orders}=useGetUserOrdersQuery();
   const {i18n,t}=useTranslation();
   return ( 
   <div className="pt-33 w-[95%] md:pt-23 md:w-[750px] lg:w-[958px] min-[1440px]:w-[1422px] mx-auto min-[1440px]:flex min-[1440px]:items-center min-[1440px]:justify-center min-[1440px]:gap-5 xl:min-h-[800px]">
       <Profilecard/>
-      <div className="bg-white py-7 mt-3 rounded-2xl">
-      <div className=" w-[80%] h-[520px]  overflow-x-auto overflow-y-auto mx-auto xl:w-[1107.2px] ">
+      <div className="bg-white py-7 mt-3 rounded-2xl flex flex-col justify-center items-center">
+      {(orders?.data?.orders&&orders?.data?.orders?.length>0)?<div className=" w-[80%] h-[520px]  overflow-x-auto overflow-y-auto mx-auto xl:w-[1107.2px] ">
       <table className=" border-collapse border-gray-200 text-sm text-right">
         <thead >
           <tr className="border-b border-gray-200">
@@ -97,8 +98,13 @@ const Myorders = () => {
       </tbody>
 
       </table>
+    </div>:
+    <div className="h-[400px] flex flex-col justify-center items-center gap-4">
+      <p className="text-gray-700 text-xl">{t("no_orders_found")}</p>
+      <Link to={"/products"} className="px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg  transition-colors duration-200">{t("start_shopping")}</Link>
+      </div>}
     </div>
-    </div>
+
 
     </div>
   )

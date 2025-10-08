@@ -152,6 +152,8 @@
                         "removed_from_cart": "Der Artikel wurde aus dem Warenkorb entfernt!",
                           "thank_you_for_order": "Danke für Ihre Bestellung!",
                             "payment_success": "Die Zahlung wurde erfolgreich abgeschlossen. Ihre Bestellung wird in Kürze bearbeitet.",
-                              "back_to_home": "Zur Startseite zurückkehren"
+                              "back_to_home": "Zur Startseite zurückkehren",
+                                "no_orders_found": "Keine Bestellungen gefunden",
+                                 "start_shopping": "Jetzt einkaufen"
 
 }
