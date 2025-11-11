@@ -39,7 +39,7 @@ const Products = () => {
        <Sidebar products={products} err={err} sales={sales} />
        </div>
        <div className="flex flex-col gap-3">
-       <img src="https://siedra-shop.eu/public/uploads/images/categories-images/8584_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9%20%D8%BA%D9%84%D8%A7%D9%81.jpg" className=" object-cover object-center rounded-lg w-[95%] h-[230px] sm:h-[300px] mx-auto md:w-[400px] lg:w-[556px] md:h-[250px] " loading="lazy"/>
+       <img src="https://siedra-shop.grizi7.com/public/uploads/images/categories-images/8584_%D8%A7%D8%AF%D9%88%D8%A7%D8%AA%20%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9%20%D8%BA%D9%84%D8%A7%D9%81.jpg" className=" object-cover object-center rounded-lg w-[95%] h-[230px] sm:h-[300px] mx-auto md:w-[400px] lg:w-[556px] md:h-[250px] " loading="lazy"/>
        <div className="bg-white w-full rounded-lg flex flex-col justify-center items-end p-4 gap-3">
         <div className="flex flex-wrap items-center justify-between w-full gap-1 self-start">
           <div className="flex items-center gap-1">        

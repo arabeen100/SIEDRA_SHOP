@@ -14,7 +14,7 @@ const Wishlist = () => {
         <p className="text-xl font-semibold">{t("wishlist.login_to_view")}</p>
         <Link to={"/login"} className="px-2 py-2 text-purple-600 border border:purple-600 hover:text-white hover:bg-purple-600 rounded-lg text-sm transition-colors duration-200">{t("navbar.login")}</Link>
       </div>}
-      { !wishlist?.data?.wishlist_items?.length &&  <p className="text-xl text-center pt-6 font-semibold">{t("wishlist.empty")}</p>}
+      { !wishlist?.data?.wishlist_items?.length && token&& <p className="text-xl text-center pt-6 font-semibold">{t("wishlist.empty")}</p>}
       {wishlist?.data?.wishlist_items?.length&&token&&
         <div className={` justify-center items-center sm:justify-normal ${i18n.language==="ar"?"sm:pr-[2.5%]":"sm:pl-[2.5%]"} md:pr-0 flex flex-wrap gap-3 md:w-[768px] lg:w-[976px] min-[1440px]:w-[1440px]`}>
           {wishlist?.data?.wishlist_items?.map(wishlistItem=>

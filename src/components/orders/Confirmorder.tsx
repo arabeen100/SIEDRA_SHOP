@@ -151,7 +151,7 @@ const Confirmorder = () => {
             name="note" id="note" className=" mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:border-black focus:border-2 focus:ring-black vs:text-sm mb-5 outline-0"  />
             <p className="text-sm font-medium">{t("checkout.payment_by")} :</p>
             <div className="w-32 h-12 border-2 rounded-lg border-purple-600 py-1 px-6 mt-4 hover:scale-105 transition-transform duration-300 cursor-pointer">
-            <img src="	https://siedra-shop.eu/b8913e23f130c0f5dfc2.png" className="object-cover object-center"/>
+            <img src="	https://siedra-shop.grizi7.com/b8913e23f130c0f5dfc2.png" className="object-cover object-center"/>
             </div>
               <button type="submit" className=" mt-4 w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 flex justify-center gap-2 cursor-pointer">
                 <p>{t("checkout.pay_now")}</p>

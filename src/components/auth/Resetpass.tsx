@@ -41,7 +41,7 @@ const Resetpass = () => {
     <ProtectedStep from="forgot-pass" redirectTo="/login">
      <div className="pt-33 xl:min-h-[800px]" >
       <div className=" w-[95%] md:w-[500px] flex-col flex items-center rounded-xl py-13 px-3 mx-auto h-fit bg-white">
-        <img src=" 	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="mx-auto w-[100px] h-[82.359px] " loading="lazy"/>
+        <img src=" 	https://siedra-shop.grizi7.com/88e908bfd66060b639ab.webp" alt="logo" className="mx-auto w-[100px] h-[82.359px] " loading="lazy"/>
         <form onSubmit={handleSubmit} className="flex flex-col  w-[70%] mt-3 px-3 ">
           <label htmlFor="code" className="block text-sm font-medium text-gray-700">{t("form.reset_code")}</label>
           <input

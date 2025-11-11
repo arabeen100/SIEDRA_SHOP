@@ -269,7 +269,7 @@ const Navbar = () => {
 
  
          <Link className="lg:order-1" to={"/"}>
-            <img src="	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="logo" className="h-[50Px] min-w-[108px] object-contain  " />  
+            <img src="	https://siedra-shop.grizi7.com/88e908bfd66060b639ab.webp" alt="logo" className="h-[50Px] min-w-[108px] object-contain  " />  
          </Link>
          {pathname!==`/search/${name}`&&<div className={`  w-[95%] h-10  fixed  top-18  left-[2.5%] md:static md:w-60 lg:order-2`}>
           <input

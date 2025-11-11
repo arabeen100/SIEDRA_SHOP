@@ -128,7 +128,7 @@ const navigate=useNavigate();
           {isLoading&&<SpinnerCircular size={20} color="white"/>}</button>
         </form>
         </div>
-        <img src="	https://siedra-shop.eu/88e908bfd66060b639ab.webp" alt="SIEDRA" loading="lazy" className="w-[200px] h-[164.719px] max-md:hidden"/>
+        <img src="	https://siedra-shop.grizi7.com/88e908bfd66060b639ab.webp" alt="SIEDRA" loading="lazy" className="w-[200px] h-[164.719px] max-md:hidden"/>
       </div>
       
     

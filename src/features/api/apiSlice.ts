@@ -411,7 +411,7 @@ interface WishlistActionResponse {
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://siedra-shop.eu/api' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://siedra-shop.grizi7.com/api' }),
     tagTypes:["profile","cart","wishlist"],
     endpoints: (builder) => ({
              register:builder.mutation<ApiResponse<MostEndpointsData>,FormData>({
