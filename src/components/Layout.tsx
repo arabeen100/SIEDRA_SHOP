@@ -6,7 +6,7 @@ import Scrolltop from "./Scrolltotop"
 const Layout  = () => {
 
   return (
-    <div className={`w-full bg-gray-300 flex flex-col `}>
+    <div className={`w-full bg-gray-300 min-h-screen flex flex-col `}>
      
         <Scrolltop/>
         <Navbar/>
